@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom'
 import { useEffect, useCallback, useRef } from 'react'
 import { CATEGORY_LABEL } from '../data/content'
 
@@ -31,7 +32,7 @@ export default function Lightbox({ photos, index, onClose, onNav }) {
 
   if (!photo) return null
 
-  return (
+  return createPortal(
     <div className="lightbox" role="dialog" aria-modal="true" aria-label={`${photo.title} — ${CATEGORY_LABEL[photo.category]}`}>
       <div className="lightbox__backdrop" onClick={onClose} />
       <div className="lightbox__stage">
@@ -55,6 +56,7 @@ export default function Lightbox({ photos, index, onClose, onNav }) {
         <button className="lightbox__nav lightbox__nav--next" onClick={() => onNav(1)} aria-label="Image suivante">→</button>
         <div className="lightbox__counter">{String(index + 1).padStart(2, '0')} / {String(photos.length).padStart(2, '0')}</div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }

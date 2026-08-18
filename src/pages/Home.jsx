@@ -6,6 +6,7 @@ import Lightbox from '../components/Lightbox'
 import { Counter, SplitReveal, TiltCard, Accordion, Aurora } from '../components/ui'
 import Icon from '../components/Icon'
 import { CATEGORIES, FAQ, OFFERS, PHOTOS, PROCESS, STATS } from '../data/content'
+import { PRINTS } from '../data/prints'
 
 const HeroScene = lazy(() => import('../three/HeroScene'))
 
@@ -239,6 +240,69 @@ function Gallery() {
   )
 }
 
+
+/* =========================================================
+   GALERIE DE TIRAGES — teaser vers /photographie
+   ========================================================= */
+function PrintsTeaser() {
+  const picks = [PRINTS[0], PRINTS[1], PRINTS[2], PRINTS[3]]
+  return (
+    <section className="section prints-teaser">
+      <Aurora />
+      <div className="container">
+        <header className="prints-teaser__head">
+          <div>
+            <p className="eyebrow" data-reveal>Tirages d'art</p>
+            <h2 className="section-title" data-reveal data-reveal-delay="60">
+              Découvrez mon <em>travail photographique</em>
+            </h2>
+            <p className="lede" data-reveal data-reveal-delay="120">
+              Une collection de dix photographies disponibles en tirage fine art ou fichier haute définition,
+              de 30 à 100 $. Réalisées à la commande, signées.
+            </p>
+          </div>
+          <Link to="/photographie" className="btn btn--ghost prints-teaser__cta" data-reveal data-reveal-delay="180">
+            Voir toute la galerie<span className="btn__arrow">→</span>
+          </Link>
+        </header>
+
+        <div className="prints-teaser__grid">
+          {picks.map((p, i) => (
+            <Link
+              key={p.id}
+              to={`/photographie#${p.id}`}
+              className={`ptile ptile--${p.orientation}`}
+              data-reveal="scale"
+              data-reveal-delay={i * 90}
+              aria-label={`${p.title} — tirage à partir de ${p.price} dollars`}
+            >
+              <img
+                src={p.src.replace('/portfolio/', '/portfolio/thumbs/')}
+                srcSet={`${p.src.replace('/portfolio/', '/portfolio/thumbs/')} 420w, ${p.src} 1000w`}
+                sizes="(max-width: 700px) 45vw, 24vw"
+                alt={`${p.title} — tirage d'art de Baya Hubert`}
+                loading="lazy"
+                decoding="async"
+                width={p.w}
+                height={p.h}
+              />
+              <span className="ptile__veil" aria-hidden="true" />
+              <span className="ptile__info">
+                <span className="ptile__title">{p.title}</span>
+                <span className="ptile__price">dès {p.price} $</span>
+              </span>
+            </Link>
+          ))}
+        </div>
+
+        <p className="prints-teaser__note" data-reveal>
+          Tirage fine art 310 g/m² · 4 formats · fabrication à la commande sous 5 à 8 jours ouvrés.
+        </p>
+      </div>
+    </section>
+  )
+}
+
 /* =========================================================
    MÉTHODE — étapes en sticky
    ========================================================= */
@@ -465,6 +529,7 @@ export default function Home() {
       <Marquee />
       <Manifesto />
       <Gallery />
+      <PrintsTeaser />
       <Stats />
       <Process />
       <Offers />

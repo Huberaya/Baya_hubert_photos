@@ -16,6 +16,7 @@ export const SITE = {
 export const NAV = [
   { to: '/', label: 'Accueil' },
   { to: '/portfolio', label: 'Portfolio' },
+  { to: '/photographie', label: 'Photographie' },
   { to: '/services', label: 'Services & Tarifs' },
   { to: '/apropos', label: 'À propos' },
 ]

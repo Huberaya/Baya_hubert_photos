@@ -7,6 +7,7 @@ import './styles/system.css'
 import './styles/app.css'
 
 const Portfolio = lazy(() => import('./pages/Portfolio'))
+const Photography = lazy(() => import('./pages/Photography'))
 const Services = lazy(() => import('./pages/Services'))
 const About = lazy(() => import('./pages/About'))
 const Contact = lazy(() => import('./pages/Contact'))
@@ -30,6 +31,7 @@ createRoot(document.getElementById('root')).render(
         <Route element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/portfolio" element={<Suspense fallback={<Loading />}><Portfolio /></Suspense>} />
+          <Route path="/photographie" element={<Suspense fallback={<Loading />}><Photography /></Suspense>} />
           <Route path="/services" element={<Suspense fallback={<Loading />}><Services /></Suspense>} />
           <Route path="/apropos" element={<Suspense fallback={<Loading />}><About /></Suspense>} />
           <Route path="/contact" element={<Suspense fallback={<Loading />}><Contact /></Suspense>} />

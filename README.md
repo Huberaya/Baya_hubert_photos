@@ -112,3 +112,41 @@ Output Directory : dist
 - Remplacer les images de démonstration par les photographies définitives (mêmes noms de fichiers,
   puis relancer la génération des vignettes).
 - Vérifier l'identifiant Formspree si le compte change (`SITE.formspree`).
+
+---
+
+## 10. Galerie de tirages — page `/photographie`
+
+### Instagram : accès impossible
+`@baya_hubert` n'est pas lisible automatiquement : le profil redirige vers le mur de connexion
+(HTTP 302) et l'API publique rejette les requêtes hors application (`useragent mismatch`).
+Aucune photo n'a donc pu être récupérée, et **aucune image n'a été inventée**.
+La collection utilise provisoirement les visuels déjà présents dans le dépôt
+(`src/data/prints.js` → `PLACEHOLDERS = true`, un bandeau le signale sur la page).
+
+### Remplacer par les vraies photographies
+1. Déposer les fichiers dans `public/assets/images/prints/` (WebP conseillé, ~2000 px de côté long).
+2. Générer les vignettes 420 px (voir `thumbs/`) — utilisées en `srcSet` et dans la visionneuse.
+3. Mettre à jour `src`, `w`, `h`, `title`, `desc`, `place`, `shot`, `price` dans `src/data/prints.js`.
+4. Passer `PLACEHOLDERS` à `false` : le bandeau disparaît.
+
+### Ce qui fonctionne réellement
+- Galerie immersive : ouverture plein écran, plaques alternées avec parallaxe, filtres par univers.
+- Visionneuse : zoom ×2,1 avec panoramique au pointeur, flèches, clavier (← → Z Échap), vignettes.
+- Panneau d'achat : 4 formats avec prix recalculés, quantité, licence, délais, total.
+- **Demande de commande réellement envoyée** par email via Formspree (même endpoint que le devis).
+- SEO : méta dédiées + JSON-LD `ItemList` / `Product` (`availability: PreOrder`, tant que le paiement n'est pas actif).
+
+### Ce qui reste à connecter : le paiement
+Aucun paiement en ligne n'est actif — c'est indiqué explicitement dans le panneau d'achat et sur la page.
+Pour activer Stripe Checkout :
+1. Créer un compte Stripe, récupérer `STRIPE_SECRET_KEY`.
+2. Ajouter une fonction serverless `api/checkout.js` (Vercel Functions) qui crée une
+   `checkout.sessions` à partir de `{ printId, formatId, qty }` — **prix recalculés côté serveur**
+   depuis `prints.js`, jamais depuis le client.
+3. Configurer les frais de port réels (Stripe `shipping_options`) et la TVA le cas échéant.
+4. Remplacer l'appel Formspree de `PurchasePanel` par un `fetch('/api/checkout')` puis une redirection
+   vers l'URL de session ; conserver l'envoi email en repli.
+5. Webhook `checkout.session.completed` → email de confirmation + lien de téléchargement pour les fichiers.
+6. Mettre `availability` à `InStock` dans le JSON-LD, et publier CGV + droit de rétractation
+   (les tirages réalisés à la commande en sont exclus : art. L221-28 du Code de la consommation).
