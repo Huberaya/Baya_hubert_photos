@@ -1,78 +1,73 @@
+// --- CENTRALIZED MOTION SYSTEM & CORE INTERACTIVITY (CLAUDE.md) ---
+
 document.addEventListener('DOMContentLoaded', () => {
-  // --- MOBILE MENU TOGGLE ---
-  const mobileMenuBtn = document.createElement('button');
-  mobileMenuBtn.className = 'mobile-menu-btn';
-  mobileMenuBtn.innerHTML = `
-    <span class="bar"></span>
-    <span class="bar"></span>
-    <span class="bar"></span>
-  `;
+  // Register GSAP ScrollTrigger
+  gsap.registerPlugin(ScrollTrigger);
+
+  // --- MOBILE NAVIGATION BAR ---
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const navLinksWrap = document.getElementById('navLinksWrap');
   
-  const navIn = document.querySelector('.nav-in');
-  const navLinks = document.querySelector('.nav-links');
-  
-  if (navIn && navLinks) {
-    navIn.appendChild(mobileMenuBtn);
-    
+  if (mobileMenuBtn && navLinksWrap) {
     mobileMenuBtn.addEventListener('click', () => {
       mobileMenuBtn.classList.toggle('active');
-      navLinks.classList.toggle('active');
+      navLinksWrap.classList.toggle('active');
       document.body.classList.toggle('menu-open');
     });
-    
-    // Close menu when clicking a link
-    navLinks.querySelectorAll('a').forEach(link => {
+
+    // Close menu when link clicked
+    navLinksWrap.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         mobileMenuBtn.classList.remove('active');
-        navLinks.classList.remove('active');
+        navLinksWrap.classList.remove('active');
         document.body.classList.remove('menu-open');
       });
     });
   }
 
-  // --- SMOOTH SCROLL ---
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      const targetId = this.getAttribute('href');
-      if (targetId === '#') return;
-      const targetEl = document.querySelector(targetId);
-      if (targetEl) {
-        e.preventDefault();
-        targetEl.scrollIntoView({
-          behavior: 'smooth'
-        });
-      }
-    });
-  });
-
-  // --- INTERACTIVE PORTFOLIO FILTER ---
+  // --- PORTFOLIO DYNAMIC FILTERING (SECTION 2) ---
   const filterButtons = document.querySelectorAll('.filter-btn');
-  const portfolioGrids = document.querySelectorAll('.portfolio-grid-group');
+  const portfolioItems = document.querySelectorAll('.portfolio-item-card');
   
-  if (filterButtons.length > 0 && portfolioGrids.length > 0) {
+  if (filterButtons.length > 0 && portfolioItems.length > 0) {
     filterButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        // Toggle active button
+        // Active states toggling
         filterButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         
-        const filterValue = btn.getAttribute('data-filter');
+        const filter = btn.getAttribute('data-filter');
         
-        // Filter elements
-        const items = document.querySelectorAll('.portfolio-item-card');
-        items.forEach(item => {
-          if (filterValue === 'all') {
-            item.style.display = 'block';
-            item.style.opacity = '0';
-            setTimeout(() => { item.style.opacity = '1'; }, 50);
+        // Filter elements with smooth GSAP animations
+        portfolioItems.forEach(item => {
+          if (filter === 'all') {
+            gsap.to(item, {
+              display: 'block',
+              opacity: 1,
+              scale: 1,
+              duration: 0.4,
+              ease: 'power3.out'
+            });
           } else {
             const categories = item.getAttribute('data-categories').split(' ');
-            if (categories.includes(filterValue)) {
-              item.style.display = 'block';
-              item.style.opacity = '0';
-              setTimeout(() => { item.style.opacity = '1'; }, 50);
+            if (categories.includes(filter)) {
+              gsap.to(item, {
+                display: 'block',
+                opacity: 1,
+                scale: 1,
+                duration: 0.4,
+                ease: 'power3.out'
+              });
             } else {
-              item.style.display = 'none';
+              gsap.to(item, {
+                opacity: 0,
+                scale: 0.95,
+                duration: 0.3,
+                ease: 'power3.in',
+                onComplete: () => {
+                  item.style.display = 'none';
+                }
+              });
             }
           }
         });
@@ -80,22 +75,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- CONTACT / QUOTE FORM HANDLER ---
+  // --- FORM ASYNCHRONOUS HANDLER & FEEDBACK ---
   const quoteForm = document.getElementById('quoteForm');
-  if (quoteForm) {
-    quoteForm.addEventListener('submit', function (e) {
+  const formBox = document.getElementById('formBox');
+  const formSuccessState = document.getElementById('formSuccessState');
+  const btnBackToForm = document.getElementById('btnBackToForm');
+  
+  if (quoteForm && formBox && formSuccessState) {
+    quoteForm.addEventListener('submit', (e) => {
       e.preventDefault();
       
-      const submitBtn = quoteForm.querySelector('button[type="submit"]');
-      const originalBtnText = submitBtn.innerHTML;
-      
-      // Basic validation
       let hasError = false;
-      const inputs = quoteForm.querySelectorAll('[required]');
       
-      inputs.forEach(input => {
-        const formGroup = input.closest('.form-group');
-        if (!input.value.trim()) {
+      // Basic input validation
+      const requiredInputs = quoteForm.querySelectorAll('[required]');
+      requiredInputs.forEach(input => {
+        const formGroup = input.closest('.form-group') || input.closest('.form-checkbox-group');
+        if (!input.value.trim() || (input.type === 'checkbox' && !input.checked)) {
           formGroup.classList.add('error');
           hasError = true;
         } else {
@@ -103,97 +99,188 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
       
-      // Email validation
-      const emailInput = quoteForm.querySelector('input[type="email"]');
-      if (emailInput && emailInput.value) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const formGroup = emailInput.closest('.form-group');
-        if (!emailRegex.test(emailInput.value)) {
-          formGroup.classList.add('error');
-          hasError = true;
-        } else {
-          formGroup.classList.remove('error');
-        }
-      }
-      
-      // GDPR Consent validation
-      const gdprInput = quoteForm.querySelector('#gdpr');
-      if (gdprInput && !gdprInput.checked) {
-        const formGroup = gdprInput.closest('.form-checkbox-group');
-        if (formGroup) {
-          formGroup.classList.add('error');
-        }
-        hasError = true;
-      } else if (gdprInput) {
-        const formGroup = gdprInput.closest('.form-checkbox-group');
-        if (formGroup) {
-          formGroup.classList.remove('error');
-        }
-      }
-      
       if (hasError) {
-        // Show an error message banner
-        showNotification('Veuillez remplir correctement tous les champs obligatoires.', 'error');
+        showNotification('Veuillez renseigner correctement les champs requis.', 'error');
         return;
       }
       
-      // Visual feedback loading state
-      submitBtn.innerHTML = '<span class="spinner"></span> Envoi en cours...';
+      // Submit Visual State
+      const submitBtn = quoteForm.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
       submitBtn.disabled = true;
+      submitBtn.textContent = 'Transmission en cours...';
       
-      // Simulate form submission (architecture ready for connection)
+      // Simulate secure api submission (ready to connect to Formspree, Netlify Forms, etc.)
       setTimeout(() => {
-        // Hide the form, show success state
-        const formContainer = document.querySelector('.form-container');
-        const successContainer = document.querySelector('.form-success-state');
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
         
-        if (formContainer && successContainer) {
-          formContainer.style.display = 'none';
-          successContainer.style.display = 'block';
-          successContainer.scrollIntoView({ behavior: 'smooth' });
-        } else {
-          // If no special container exists, alert and reset form
-          showNotification('Votre demande de devis a été envoyée avec succès ! Je vous répondrai sous 24 h.', 'success');
-          quoteForm.reset();
-          submitBtn.innerHTML = originalBtnText;
-          submitBtn.disabled = false;
-        }
-      }, 1500);
+        // Animate out Form and animate in Success panel (centralized motion)
+        gsap.to(formBox, {
+          opacity: 0,
+          y: -24,
+          duration: 0.5,
+          ease: 'power3.in',
+          onComplete: () => {
+            formBox.style.display = 'none';
+            formSuccessState.style.display = 'block';
+            
+            gsap.fromTo(formSuccessState, 
+              { opacity: 0, y: 24 },
+              { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }
+            );
+          }
+        });
+      }, 1200);
     });
+    
+    if (btnBackToForm) {
+      btnBackToForm.addEventListener('click', () => {
+        gsap.to(formSuccessState, {
+          opacity: 0,
+          y: 24,
+          duration: 0.4,
+          ease: 'power3.in',
+          onComplete: () => {
+            formSuccessState.style.display = 'none';
+            formBox.style.display = 'block';
+            quoteForm.reset();
+            
+            gsap.fromTo(formBox,
+              { opacity: 0, y: -24 },
+              { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }
+            );
+          }
+        });
+      });
+    }
   }
+
+  // Helper notification alert
+  function showNotification(message, type) {
+    const existing = document.querySelector('.form-notification');
+    if (existing) existing.remove();
+    
+    const banner = document.createElement('div');
+    banner.className = `form-notification ${type}`;
+    banner.textContent = message;
+    
+    const form = document.getElementById('quoteForm');
+    if (form) {
+      form.insertBefore(banner, form.firstChild);
+      setTimeout(() => {
+        banner.style.opacity = '1';
+      }, 10);
+      
+      setTimeout(() => {
+        banner.style.opacity = '0';
+        setTimeout(() => banner.remove(), 300);
+      }, 4000);
+    }
+  }
+
+  // --- COUCHE MOTION CENTRALISÉE (ÉTAPE 6) ---
+  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   
-  // Custom interactive form validation states on change
-  const formControls = document.querySelectorAll('.form-control');
-  formControls.forEach(control => {
-    control.addEventListener('input', function() {
-      const formGroup = this.closest('.form-group');
-      if (formGroup && this.value.trim()) {
-        formGroup.classList.remove('error');
-      }
+  // Setup matchMedia for GSAP
+  let mm = gsap.matchMedia();
+  
+  mm.add({
+    // Standard motion setup
+    hasMotion: '(prefers-reduced-motion: no-preference)',
+    // Reduced motion setup
+    reducedMotion: '(prefers-reduced-motion: reduce)'
+  }, (context) => {
+    let { hasMotion } = context.conditions;
+    
+    if (!hasMotion) {
+      // IF USER PREFERS REDUCED MOTION: render final states instantly (Règles de travail)
+      gsap.set('[data-anim="reveal"], [data-anim="fade"], .site-header, .apropos-portrait-w', {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
+      });
+      return;
+    }
+    
+    // --- STANDARD PREMIUM MOTION SYSTEMS ---
+    
+    // 1. Sticky Navigation reveal on start
+    gsap.fromTo('.site-header', 
+      { opacity: 0, y: -16 },
+      { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.1 }
+    );
+    
+    // 2. Scan DOM and animate Elements with [data-anim="reveal"]
+    // Used for headers, taglines and intros
+    const revealElements = document.querySelectorAll('[data-anim="reveal"]');
+    revealElements.forEach(el => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
     });
+
+    // 3. Scan DOM and animate Elements with [data-anim="fade"]
+    // Used for pricing cards and portfolio items
+    const fadeElements = document.querySelectorAll('[data-anim="fade"]');
+    if (fadeElements.length > 0) {
+      // We group them if they are in the same section to stagger them elegantly
+      const sectionsWithFade = new Set();
+      fadeElements.forEach(el => {
+        const sec = el.closest('section');
+        if (sec) sectionsWithFade.add(sec);
+      });
+      
+      sectionsWithFade.forEach(sec => {
+        const items = sec.querySelectorAll('[data-anim="fade"]');
+        gsap.fromTo(items,
+          { opacity: 0, y: 16 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.08, // Stagger d'élite
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: sec,
+              start: 'top 80%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+      });
+    }
+
+    // 4. MOMENT SIGNATURE (ÉTAPE 6)
+    // Dynamic Clip-path revealing for Baya's Portrait
+    const portraitContainer = document.querySelector('.apropos-portrait-w');
+    if (portraitContainer) {
+      gsap.fromTo(portraitContainer,
+        { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)', scale: 1.05 },
+        {
+          clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+          scale: 1,
+          duration: 1.6,
+          ease: 'power4.inOut',
+          scrollTrigger: {
+            trigger: portraitContainer,
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
+    }
   });
 });
-
-// Helper function to show alerts
-function showNotification(message, type = 'success') {
-  const existingAlert = document.querySelector('.form-notification');
-  if (existingAlert) existingAlert.remove();
-  
-  const alert = document.createElement('div');
-  alert.className = `form-notification ${type}`;
-  alert.textContent = message;
-  
-  const form = document.getElementById('quoteForm');
-  if (form) {
-    form.parentNode.insertBefore(alert, form);
-    setTimeout(() => {
-      alert.style.opacity = '1';
-    }, 10);
-    
-    // Auto-dismiss after 5s
-    setTimeout(() => {
-      alert.style.opacity = '0';
-      setTimeout(() => alert.remove(), 400);
-    }, 5000);
-  }
-}
