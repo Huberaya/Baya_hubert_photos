@@ -1,0 +1,91 @@
+/* Jeu d'icônes maison — trait 1.4, grille 24, cohérent avec le design system */
+const P = {
+  cup: (
+    <>
+      <path d="M4 8h13v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8Z" />
+      <path d="M17 9.5h1.5a2.5 2.5 0 0 1 0 5H17" />
+      <path d="M7 5V3M10.5 5V3M14 5V3" />
+    </>
+  ),
+  briefcase: (
+    <>
+      <rect x="3" y="7.5" width="18" height="12.5" rx="2.5" />
+      <path d="M8.5 7.5V6a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v1.5" />
+      <path d="M3 12.5h18M12 12v2" />
+    </>
+  ),
+  sparkle: (
+    <>
+      <path d="M12 3.5c.9 4.2 2.4 5.7 6.5 6.5-4.1.8-5.6 2.3-6.5 6.5-.9-4.2-2.4-5.7-6.5-6.5 4.1-.8 5.6-2.3 6.5-6.5Z" />
+      <path d="M18 16.5c.4 1.9 1.1 2.6 3 3-1.9.4-2.6 1.1-3 3-.4-1.9-1.1-2.6-3-3 1.9-.4 2.6-1.1 3-3Z" />
+    </>
+  ),
+  camera: (
+    <>
+      <path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h1.8l1.3-2h6.8l1.3 2h1.8A2.5 2.5 0 0 1 21 8.5v9A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5v-9Z" />
+      <circle cx="12" cy="13" r="4" />
+    </>
+  ),
+  heart: <path d="M12 20s-7.5-4.4-7.5-9.4A4.1 4.1 0 0 1 12 8.2a4.1 4.1 0 0 1 7.5 2.4C19.5 15.6 12 20 12 20Z" />,
+  rings: (
+    <>
+      <circle cx="9" cy="14" r="5.5" />
+      <circle cx="15.5" cy="12" r="5" />
+      <path d="M12 4.5 13.5 7h-3L12 4.5Z" />
+    </>
+  ),
+  pin: (
+    <>
+      <path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z" />
+      <circle cx="12" cy="10" r="2.7" />
+    </>
+  ),
+  mail: (
+    <>
+      <rect x="3" y="5.5" width="18" height="13" rx="2.5" />
+      <path d="m4 8 8 5.5L20 8" />
+    </>
+  ),
+  instagram: (
+    <>
+      <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17" cy="7" r="0.9" fill="currentColor" stroke="none" />
+    </>
+  ),
+  clock: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 7v5.3l3.4 2" />
+    </>
+  ),
+  aperture: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 3.5 8.6 12M20.1 8.6 11 10.4M18.8 18.1 13.4 10.6M12 20.5 15.4 12M3.9 15.4 13 13.6M5.2 5.9l5.4 7.5" />
+    </>
+  ),
+  check: <path d="m4 12.5 5 5L20 6.5" />,
+}
+
+export default function Icon({ name, size = 22, className = '', strokeWidth = 1.4 }) {
+  const d = P[name]
+  if (!d) return null
+  return (
+    <svg
+      className={`icon ${className}`}
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {d}
+    </svg>
+  )
+}
