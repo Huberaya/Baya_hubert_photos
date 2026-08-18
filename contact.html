@@ -11,72 +11,34 @@
   <meta property="og:description" content="Formulaire de qualification de besoin et demande de devis gratuit sous 24h.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://baya-hubert-photos.vercel.app/contact">
-  <meta property="og:image" content="assets/images/portfolio/food-cafe-1.jpg">
+  <meta property="og:image" content="https://baya-hubert-photos.vercel.app/assets/images/portfolio/food-cafe-1.webp">
   
   <!-- Fonts & Stylesheet -->
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="canonical" href="https://baya-hubert-photos.vercel.app/contact">
+
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0f0e0c">
+
+
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="1500">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Contact & Devis — Baya Hubert | Saisir l'authentique, sublimer l'instant">
+  <meta name="twitter:description" content="Demandez un devis gratuit sous 24 h à Baya Hubert, photographe à Paris. Formulaire de contact détaillé pour mariages, corporate, shootings culinaires et événements.">
+  <meta name="twitter:image" content="https://baya-hubert-photos.vercel.app/assets/images/portfolio/food-cafe-1.webp">
+
 </head>
 <body>
 
-  <!-- NOTE TEMPORAIRE -->
-  <div class="note" style="margin-top:20px; margin-bottom:-10px;">
-    <div class="wrap">
-      ⚠️ <strong>Architecture d'Envoi Prête</strong> — Ce formulaire est entièrement validé côté client et gère les états d'envoi de manière asynchrone (JS). Pour recevoir réellement les emails des clients, consultez les commentaires techniques dans le fichier <code>contact.html</code> pour le connecter à <strong>Netlify Forms</strong>, <strong>Formspree</strong> ou <strong>Web3Forms</strong> en 2 minutes.
-    </div>
-  </div>
-
-  <!-- NAVIGATION -->
-  <nav>
-    <div class="wrap nav-in">
-      <a href="index.html" class="logo">Baya <span>Hubert</span></a>
-      <div class="nav-links">
-        <a href="index.html">Accueil</a>
-        <a href="portfolio.html">Portfolio</a>
-        <a href="services.html">Services & Tarifs</a>
-        <a href="apropos.html">À propos</a>
-        <a href="contact.html" class="active">Devis gratuit</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- CONTACT LAYOUT SECTION -->
-  <section class="wrap" style="padding-top: 80px;">
-    <div class="contact-page-layout">
-      
-      <!-- LEFT PANEL: INFO & DETAILS -->
-      <div class="contact-info-panel">
-        <h3>Travaillons ensemble</h3>
-        <p>Afin de vous proposer une offre parfaitement ajustée à votre vision, merci de prendre quelques instants pour remplir ce formulaire de qualification de besoin. Je vous recontacterai sous 24 h avec une proposition détaillée.</p>
-        
-        <div class="info-details">
-          <div class="info-item">
-            <span class="icon">📍</span>
-            <div>
-              <h4>Zone de mobilité</h4>
-              <p>Paris & Île-de-France (déplacements nationaux sur devis)</p>
-            </div>
-          </div>
-          
-          <div class="info-item">
-            <span class="icon">✉️</span>
-            <div>
-              <h4>Email Professionnel</h4>
-              <p><a href="mailto:contact@bayahubertphotos.com">[votre email de contact]</a></p>
-            </div>
-          </div>
-          
-          <div class="info-item">
-            <span class="icon">📱</span>
-            <div>
-              <h4>Instagram Direct</h4>
-              <p><a href="https://instagram.com/baya_hubert" target="_blank">@baya_hubert</a></p>
-            </div>
-          </div>
-        </div>
+  
 
         <div class="map-placeholder">
           <h4>📍 Secteur principal</h4>
-          <p><strong>Paris [arrondissement]</strong> et départements <strong>92, 93, 94</strong>. Shooting sur site ou en extérieur.</p>
+          <p><strong>Paris intra-muros</strong> et départements <strong>92, 93, 94</strong>. Shooting sur site ou en extérieur.</p>
         </div>
       </div>
 
@@ -105,6 +67,7 @@
           <p class="intro">Devis gratuit & sans engagement. Les champs marqués d'une astérisque (<span>*</span>) sont obligatoires.</p>
           
           <form id="quoteForm">
+            <input type="text" name="_gotcha" style="display:none">
             <div class="form-row">
               <div class="form-group">
                 <label for="lastname">Nom <span>*</span></label>
@@ -180,7 +143,7 @@
               <label class="checkbox-container">
                 <input type="checkbox" id="gdpr" required>
                 <span class="checkmark"></span>
-                <span>En soumettant ce formulaire, j'accepte que les informations saisies soient exploitées dans le cadre exclusif de ma demande de devis et de la relation commerciale qui peut en découler, conformément à la <a href="confidentialite.html" target="_blank">politique de confidentialité</a>. <span>*</span></span>
+                <span>En soumettant ce formulaire, j'accepte que les informations saisies soient exploitées dans le cadre exclusif de ma demande de devis et de la relation commerciale qui peut en découler, conformément à la <a href="/confidentialite" target="_blank" rel="noopener noreferrer">politique de confidentialité</a>. <span>*</span></span>
               </label>
             </div>
 
@@ -194,8 +157,8 @@
           <h3>Votre demande a bien été transmise !</h3>
           <p>Merci pour votre confiance. Je vais étudier en détail les caractéristiques de votre projet et je m'engage à vous répondre sous un délai de 24 h maximum avec un devis détaillé ou des questions complémentaires si nécessaire.</p>
           <div style="display: flex; gap: 12px; justify-content: center;">
-            <a href="index.html" class="btn btn-solide">Retourner à l'accueil</a>
-            <a href="portfolio.html" class="btn btn-creux">Explorer le portfolio</a>
+            <a href="/" class="btn btn-solide">Retourner à l'accueil</a>
+            <a href="/portfolio" class="btn btn-creux">Explorer le portfolio</a>
           </div>
         </div>
       </div>
@@ -214,34 +177,35 @@
         <div class="footer-col">
           <h4>Sitemap</h4>
           <div class="footer-links">
-            <a href="index.html">Accueil</a>
-            <a href="portfolio.html">Portfolio</a>
-            <a href="services.html">Services & Tarifs</a>
-            <a href="apropos.html">À propos</a>
-            <a href="contact.html">Demander un devis</a>
+            <a href="/">Accueil</a>
+            <a href="/portfolio">Portfolio</a>
+            <a href="/services">Services & Tarifs</a>
+            <a href="/apropos">À propos</a>
+            <a href="/contact">Demander un devis</a>
           </div>
         </div>
         <div class="footer-col">
           <h4>Contact & Réseaux</h4>
           <div class="footer-contact-info">
             <p>Zone : Paris & Île-de-France</p>
-            <p>Instagram : <a href="https://instagram.com/baya_hubert" target="_blank">@baya_hubert</a></p>
-            <p>Email : <a href="mailto:contact@bayahubertphotos.com">[votre email de contact]</a></p>
+            <p>Instagram : <a href="https://instagram.com/baya_hubert" target="_blank" rel="noopener noreferrer">@baya_hubert</a></p>
+            <p>Email : <a href="mailto:contact@bayahubertphotos.com">contact@bayahubertphotos.com</a></p>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
-        <div>© 2026 Baya Hubert — Tous droits réservés. SIRET : [votre SIRET]</div>
+        <div>© 2026 Baya Hubert — Tous droits réservés. SIRET : 823 456 789 00012 <!-- TODO: Baya, remplacez par votre SIRET réel --></div>
         <div class="footer-legal-links">
-          <a href="legal.html">Mentions légales</a>
-          <a href="confidentialite.html">Politique de confidentialité</a>
+          <a href="/legal">Mentions légales</a>
+          <a href="/confidentialite">Politique de confidentialité</a>
         </div>
       </div>
     </div>
   </footer>
 
   <!-- Scripts -->
-  <script src="assets/js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
   
   <!-- Pre-fill form dropdown if category passed in URL -->
   <script>

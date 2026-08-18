@@ -1,0 +1,10 @@
+node_modules/
+.cache/
+.local/
+.npm/
+package-lock.json
+package.json
+baya_photos_premium.zip
+ref1.html
+ref2.html
+*.log
