@@ -4,10 +4,10 @@ Refonte complète du portfolio de **Hubert Baya**, construite avec Next.js 16 (A
 
 ## Expérience
 
-- Hero 3D React Three Fiber avec photographies flottantes, particules et parallaxe souris
-- Storytelling scroll pinné, galerie vidéo et parcours horizontal GSAP
-- Portfolio masonry filtrable avec transitions Framer Motion
-- Pages projet cinématiques, lightbox et navigation visuelle
+- Hero futuriste 3D React Three Fiber avec noyau cinétique, orbites, photographies flottantes et parallaxe souris
+- Interface HUD, grille perspective, scanlines et storytelling scroll piloté par GSAP
+- Portfolio masonry filtrable avec **35 séries — 5 minimum par catégorie**
+- 35 pages projet cinématiques, lightbox et navigation visuelle
 - Page À propos éditoriale avec timeline et compteurs
 - Services en cartes 3D avec déploiement plein écran
 - Formulaire accessible avec validation API et envoi Resend optionnel

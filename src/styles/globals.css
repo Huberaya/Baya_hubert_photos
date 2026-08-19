@@ -60,6 +60,23 @@ img { user-select: none; }
 }
 .gold-glow { background: radial-gradient(circle, rgba(201,169,110,.16), transparent 68%); }
 .hairline { border-color: rgba(243,240,232,.14); }
+.future-grid {
+  background-image: linear-gradient(rgba(201,169,110,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(201,169,110,.055) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
+  transform: perspective(700px) rotateX(60deg) scale(1.65) translateY(24%);
+  transform-origin: center bottom;
+}
+.scanline { background: linear-gradient(to bottom, transparent 48%, rgba(201,169,110,.035) 50%, transparent 52%); background-size: 100% 7px; opacity: .26; mix-blend-mode: screen; }
+.status-dot { width: 5px; height: 5px; border-radius: 999px; background: #c9a96e; box-shadow: 0 0 0 5px rgba(201,169,110,.08), 0 0 18px rgba(201,169,110,.8); animation: signal-pulse 2s ease-in-out infinite; }
+.animate-spin-slow { animation: spin 9s linear infinite; }
+@keyframes signal-pulse { 50% { opacity: .35; transform: scale(.72); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+.tech-frame { position: relative; border: 1px solid rgba(243,240,232,.11); background: rgba(9,10,10,.62); backdrop-filter: blur(18px); }
+.tech-frame::before, .tech-frame::after { content:''; position:absolute; width:18px; height:18px; pointer-events:none; }
+.tech-frame::before { left:-1px; top:-1px; border-left:1px solid #c9a96e; border-top:1px solid #c9a96e; }
+.tech-frame::after { right:-1px; bottom:-1px; border-right:1px solid #c9a96e; border-bottom:1px solid #c9a96e; }
+
 
 .link-line { position: relative; }
 .link-line::after {
