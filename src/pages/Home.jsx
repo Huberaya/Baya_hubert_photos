@@ -77,7 +77,7 @@ function HeroFallback() {
       <div className="hero__fallback-iris">
         <span /><span /><span />
       </div>
-      <img src="/assets/images/portfolio/architecture-1.webp" alt="" className="hero__fallback-img" loading="eager" decoding="async" />
+      <img src="/assets/images/gallery/archi-1.webp" alt="" className="hero__fallback-img" loading="eager" decoding="async" />
     </div>
   )
 }
@@ -161,9 +161,9 @@ function Manifesto() {
 
         <div className="manifesto__media" data-reveal="right">
           <div className="manifesto__stack">
-            <img src="/assets/images/portfolio/portraits-lifestyle-2.webp" alt="Portrait en lumière naturelle réalisé par Baya Hubert" loading="lazy" decoding="async" width="340" height="425" className="manifesto__img manifesto__img--a" />
-            <img src="/assets/images/portfolio/food-cafe-2.webp" alt="Photographie culinaire en lumière de fenêtre" loading="lazy" decoding="async" width="340" height="425" className="manifesto__img manifesto__img--b" />
-            <img src="/assets/images/portfolio/nature-saisons-2.webp" alt="Paysage d'Île-de-France à l'heure dorée" loading="lazy" decoding="async" width="340" height="425" className="manifesto__img manifesto__img--c" />
+            <img src="/assets/images/gallery/rue-3.webp" alt="Scène de rue à Paris, photographie de Baya Hubert" loading="lazy" decoding="async" width="340" height="425" className="manifesto__img manifesto__img--a" />
+            <img src="/assets/images/gallery/archi-2.webp" alt="Verrière de gare parisienne en contre-jour" loading="lazy" decoding="async" width="340" height="425" className="manifesto__img manifesto__img--b" />
+            <img src="/assets/images/gallery/nature-2.webp" alt="Pont de pierre dans un parc, noir et blanc" loading="lazy" decoding="async" width="340" height="425" className="manifesto__img manifesto__img--c" />
           </div>
         </div>
       </div>
@@ -459,7 +459,7 @@ function AboutTeaser() {
     <section className="section about-teaser">
       <div className="container about-teaser__grid">
         <div className="about-teaser__media" data-reveal="left">
-          <img src="/assets/images/portfolio/portraits-lifestyle-1.webp" alt="Baya Hubert, photographe à Paris" loading="lazy" decoding="async" width="340" height="425" />
+          <img src="/assets/images/gallery/nuit-2.webp" alt="Rue parisienne de nuit photographiée par Baya Hubert" loading="lazy" decoding="async" width="340" height="425" />
           <div className="about-teaser__glass glass">
             <strong>Hybride Full Frame</strong>
             <span>Double sauvegarde sur site</span>

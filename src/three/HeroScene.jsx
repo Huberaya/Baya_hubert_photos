@@ -147,12 +147,12 @@ function Aperture({ pointer, tier }) {
    PHOTOS EN ORBITE — vraies images du portfolio
    ========================================================= */
 const ORBIT_SRC = [
-  '/assets/images/portfolio/thumbs/food-cafe-1.webp',
-  '/assets/images/portfolio/thumbs/urbain-street-1.webp',
-  '/assets/images/portfolio/thumbs/architecture-1.webp',
-  '/assets/images/portfolio/thumbs/portraits-lifestyle-1.webp',
-  '/assets/images/portfolio/thumbs/nature-saisons-1.webp',
-  '/assets/images/portfolio/thumbs/food-cafe-3.webp',
+  '/assets/images/gallery/thumbs/archi-1.webp',
+  '/assets/images/gallery/thumbs/nuit-3.webp',
+  '/assets/images/gallery/thumbs/rue-1.webp',
+  '/assets/images/gallery/thumbs/scene-1.webp',
+  '/assets/images/gallery/thumbs/nature-1.webp',
+  '/assets/images/gallery/thumbs/archi-2.webp',
 ]
 
 function PhotoRing({ pointer, tier, fadeFrom = -1 }) {

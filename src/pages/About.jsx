@@ -65,7 +65,7 @@ export default function About() {
           </div>
 
           <div className="about-portrait" data-reveal="right">
-            <img src="/assets/images/portfolio/portraits-lifestyle-1.webp" alt="Portrait de Baya Hubert, photographe à Paris" loading="eager" decoding="async" width="340" height="425" />
+            <img src="/assets/images/gallery/rue-2.webp" alt="Instantané de rue signé Baya Hubert" loading="eager" decoding="async" width="340" height="425" />
           </div>
         </div>
       </section>

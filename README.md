@@ -117,18 +117,18 @@ Output Directory : dist
 
 ## 10. Galerie de tirages — page `/photographie`
 
-### Instagram : accès impossible
-`@baya_hubert` n'est pas lisible automatiquement : le profil redirige vers le mur de connexion
-(HTTP 302) et l'API publique rejette les requêtes hors application (`useragent mismatch`).
-Aucune photo n'a donc pu être récupérée, et **aucune image n'a été inventée**.
-La collection utilise provisoirement les visuels déjà présents dans le dépôt
-(`src/data/prints.js` → `PLACEHOLDERS = true`, un bandeau le signale sur la page).
+### Origine des photographies
+L'API Instagram étant fermée, les images proviennent de l'**album Google Photos partagé** par
+Baya Hubert (publications @baya_hubert) : 151 fichiers récupérés, dédoublonnés, puis 25 retenus.
+- 10 tirages en vente → `public/assets/images/prints/` (+ `thumbs/` 420 px)
+- 15 photographies de portfolio → `public/assets/images/gallery/` (+ `thumbs/`)
+Tous les visuels sont convertis en WebP (qualité 72-84 selon le grain) ; les vignettes servent
+aux grilles, aux textures 3D du hero et à la bande de la visionneuse.
 
-### Remplacer par les vraies photographies
-1. Déposer les fichiers dans `public/assets/images/prints/` (WebP conseillé, ~2000 px de côté long).
-2. Générer les vignettes 420 px (voir `thumbs/`) — utilisées en `srcSet` et dans la visionneuse.
-3. Mettre à jour `src`, `w`, `h`, `title`, `desc`, `place`, `shot`, `price` dans `src/data/prints.js`.
-4. Passer `PLACEHOLDERS` à `false` : le bandeau disparaît.
+### Ajouter ou remplacer une photographie
+1. Déposer le fichier dans `prints/` ou `gallery/`, générer la vignette 420 px dans `thumbs/`.
+2. Ajouter l'entrée dans `src/data/prints.js` (vente) ou `src/data/content.js` → `PHOTOS` (portfolio).
+3. Renseigner `w`/`h` réels : ils évitent tout décalage de mise en page (CLS).
 
 ### Ce qui fonctionne réellement
 - Galerie immersive : ouverture plein écran, plaques alternées avec parallaxe, filtres par univers.

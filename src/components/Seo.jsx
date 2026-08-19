@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { SITE } from '../data/content'
 
 /* Met à jour title/description/canonical/OG sans dépendance externe */
-export default function Seo({ title, description, path = '/', image = '/assets/images/portfolio/food-cafe-1.webp', noindex = false }) {
+export default function Seo({ title, description, path = '/', image = '/assets/images/prints/escalier-spirale.webp', noindex = false }) {
   useEffect(() => {
     const fullTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — Photographe à Paris`
     document.title = fullTitle

@@ -23,47 +23,31 @@ export const NAV = [
 
 export const CATEGORIES = [
   { id: 'all', label: 'Tous', desc: "L'intégralité de la sélection" },
-  { id: 'food-cafe', label: 'Food & Café', desc: 'restaurants, plats, ambiances' },
-  { id: 'urbain-street', label: 'Urbain & Street', desc: 'rues, scènes de vie, graphisme' },
-  { id: 'architecture', label: 'Architecture', desc: 'façades, bâtiments, intérieurs' },
-  { id: 'nature-saisons', label: 'Nature & Saisons', desc: 'paysages, ciels, lumière' },
-  { id: 'portraits-lifestyle', label: 'Portraits & Lifestyle', desc: 'personnes, moments, mode de vie' },
+  { id: 'rue', label: 'Rue & Instantanés', desc: 'scènes de vie, passants, mouvement' },
+  { id: 'archi', label: 'Architecture & Lignes', desc: 'escaliers, verrières, perspectives' },
+  { id: 'nuit', label: 'Nuit & Lumières', desc: 'heure bleue, tunnels, néons' },
+  { id: 'nature', label: 'Nature & Saisons', desc: 'paysages, eau, arbres' },
+  { id: 'scene', label: 'Scène & Culture', desc: 'concerts, danse, carnaval' },
 ]
 
-const build = (cat, n, meta) =>
-  Array.from({ length: n }, (_, i) => ({
-    id: `${cat}-${i + 1}`,
-    src: `/assets/images/portfolio/${cat}-${i + 1}.webp`,
-    category: cat,
-    ...meta[i],
-  }))
+const G = '/assets/images/gallery'
 
 export const PHOTOS = [
-  ...build('food-cafe', 3, [
-    { title: 'Table du matin', place: 'Paris 11e', light: 'Lumière naturelle latérale', focal: '50 mm · f/1.8' },
-    { title: 'Comptoir', place: 'Paris 3e', light: 'Contre-jour tamisé', focal: '35 mm · f/2.0' },
-    { title: 'Dressage', place: 'Paris 9e', light: 'Fenêtre nord', focal: '85 mm · f/2.2' },
-  ]),
-  ...build('urbain-street', 3, [
-    { title: 'Traversée', place: 'Paris 10e', light: 'Heure bleue', focal: '35 mm · f/2.8' },
-    { title: 'Géométrie de rue', place: 'Paris 13e', light: 'Soleil rasant', focal: '50 mm · f/4' },
-    { title: 'Scène de vie', place: 'Montreuil', light: 'Lumière diffuse', focal: '35 mm · f/2' },
-  ]),
-  ...build('architecture', 3, [
-    { title: 'Façade verticale', place: 'La Défense', light: 'Midi contrasté', focal: '24 mm · f/8' },
-    { title: 'Intérieur silencieux', place: 'Paris 7e', light: 'Lumière zénithale', focal: '24 mm · f/5.6' },
-    { title: 'Lignes de fuite', place: 'Paris 12e', light: 'Fin de journée', focal: '35 mm · f/6.3' },
-  ]),
-  ...build('nature-saisons', 3, [
-    { title: 'Canopée', place: 'Vincennes', light: 'Sous-bois filtré', focal: '85 mm · f/2.5' },
-    { title: 'Ciel de saison', place: 'Île-de-France', light: 'Golden hour', focal: '50 mm · f/4' },
-    { title: 'Matière végétale', place: 'Meudon', light: 'Ombre douce', focal: '85 mm · f/2' },
-  ]),
-  ...build('portraits-lifestyle', 3, [
-    { title: 'Regard direct', place: 'Studio Paris 11e', light: 'Fenêtre unique', focal: '85 mm · f/1.8' },
-    { title: 'Instant partagé', place: 'Buttes-Chaumont', light: 'Golden hour', focal: '50 mm · f/1.8' },
-    { title: 'Portrait au travail', place: 'Paris 2e', light: 'Lumière ambiante', focal: '35 mm · f/2' },
-  ]),
+  { id: 'rue-1', src: `${G}/rue-1.webp`, category: 'rue', title: 'Traversée', place: 'Paris', light: 'Lumière du jour', focal: 'Noir et blanc' },
+  { id: 'rue-2', src: `${G}/rue-2.webp`, category: 'rue', title: 'Envol', place: 'Place de Paris', light: 'Contraste franc', focal: 'Instantané' },
+  { id: 'rue-3', src: `${G}/rue-3.webp`, category: 'rue', title: "Sortie d'escalier", place: 'Paris', light: 'Plein jour', focal: 'Scène de rue' },
+  { id: 'archi-1', src: `${G}/archi-1.webp`, category: 'archi', title: 'Vertige', place: 'Paris', light: 'Lumière zénithale', focal: 'Plongée verticale' },
+  { id: 'archi-2', src: `${G}/archi-2.webp`, category: 'archi', title: 'Verrière', place: 'Gare, Paris', light: 'Contre-jour', focal: 'Structure métallique' },
+  { id: 'archi-3', src: `${G}/archi-3.webp`, category: 'archi', title: 'Nef', place: 'Paris', light: 'Lumière latérale', focal: 'Perspective' },
+  { id: 'nuit-1', src: `${G}/nuit-1.webp`, category: 'nuit', title: 'Tunnel', place: 'Périphérique', light: 'Nuit', focal: 'Pose lente' },
+  { id: 'nuit-2', src: `${G}/nuit-2.webp`, category: 'nuit', title: 'Rue basse', place: 'Paris', light: 'Éclairage urbain', focal: 'Noir et blanc' },
+  { id: 'nuit-3', src: `${G}/nuit-3.webp`, category: 'nuit', title: 'Heure bleue', place: 'Grands boulevards', light: 'Crépuscule', focal: 'Couleur' },
+  { id: 'nature-1', src: `${G}/nature-1.webp`, category: 'nature', title: 'Estuaire', place: 'Vue aérienne', light: 'Soleil bas', focal: 'Noir et blanc' },
+  { id: 'nature-2', src: `${G}/nature-2.webp`, category: 'nature', title: 'Pont de pierre', place: 'Parc', light: 'Ombre douce', focal: 'Paysage' },
+  { id: 'nature-3', src: `${G}/nature-3.webp`, category: 'nature', title: 'Hiver', place: 'Île-de-France', light: 'Ciel couvert', focal: 'Saison' },
+  { id: 'scene-1', src: `${G}/scene-1.webp`, category: 'scene', title: 'Ensemble', place: 'Scène, Paris', light: 'Lumière de scène', focal: 'Reportage' },
+  { id: 'scene-2', src: `${G}/scene-2.webp`, category: 'scene', title: 'Solo', place: 'Scène, Paris', light: 'Poursuite', focal: 'Clair-obscur' },
+  { id: 'scene-3', src: `${G}/scene-3.webp`, category: 'scene', title: 'Voix', place: 'Concert', light: 'Contre-jour', focal: 'Live' },
 ]
 
 export const CATEGORY_LABEL = Object.fromEntries(CATEGORIES.map((c) => [c.id, c.label]))
