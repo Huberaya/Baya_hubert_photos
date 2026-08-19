@@ -178,11 +178,11 @@ function Sun() {
    PLANÈTES — Photos bien plus grandes et indépendantes
    ========================================================= */
 const PLANETS_DATA = [
-  { id: 'gastro',    source: '/assets/images/gallery/thumbs/gastro-1.webp',    radius: 6.0, speed: 0.32, tilt: 0.10,  phase: 0 },
-  { id: 'portrait',  source: '/assets/images/gallery/thumbs/portrait-1.webp',  radius: 8.4, speed: 0.23, tilt: -0.20, phase: Math.PI * 0.4 },
-  { id: 'immobili', source: '/assets/images/gallery/thumbs/immobili-1.webp', radius: 10.6, speed: 0.18, tilt: 0.08,  phase: Math.PI * 0.7 },
-  { id: 'shooting',  source: '/assets/images/gallery/thumbs/shooting-1.webp',  radius: 13.0, speed: 0.14, tilt: -0.12, phase: Math.PI * 0.2 },
-  { id: 'mariage',   source: '/assets/images/gallery/thumbs/scene-2.webp',    radius: 15.5, speed: 0.11, tilt: 0.06,  phase: Math.PI * 0.5 },
+  { id: 'gastro',    source: '/assets/images/gallery/thumbs/gastro-1.webp',    radius: 7.5,  speed: 0.32, tilt: 0.10,  phase: 0 },
+  { id: 'portrait',  source: '/assets/images/gallery/thumbs/portrait-1.webp',  radius: 10.5, speed: 0.23, tilt: -0.20, phase: Math.PI * 0.4 },
+  { id: 'immobili', source: '/assets/images/gallery/thumbs/immobili-1.webp', radius: 13.5, speed: 0.18, tilt: 0.08,  phase: Math.PI * 0.7 },
+  { id: 'shooting',  source: '/assets/images/gallery/thumbs/shooting-1.webp',  radius: 17.0, speed: 0.14, tilt: -0.12, phase: Math.PI * 0.2 },
+  { id: 'mariage',   source: '/assets/images/gallery/thumbs/scene-2.webp',    radius: 20.5, speed: 0.11, tilt: 0.06,  phase: Math.PI * 0.5 },
 ]
 
 function Planet({ source, radius, speed, tilt, phase, photoSize }) {
@@ -420,8 +420,8 @@ function Rig({ pointer }) {
   const { camera } = useThree()
   useFrame((_, dt) => {
     const k = 1 - Math.exp(-2.2 * Math.min(dt, 0.1))
-    camera.position.x += (pointer.current.x * 1.8 - camera.position.x) * k
-    camera.position.y += (-pointer.current.y * 1.0 - camera.position.y) * k
+    camera.position.x += (pointer.current.x * 2.0 - camera.position.x) * k
+    camera.position.y += (-pointer.current.y * 1.2 - camera.position.y) * k
     camera.lookAt(0, 6, 0)
   })
   return null
@@ -435,9 +435,9 @@ function Composition({ children }) {
   const group = useRef()
   const isWide = size.width >= 1024
   const isMobile = size.width < 700 || (size.width < 1024 && size.height >= size.width)
-  const x = isWide ? viewport.width * 0.20 : isMobile ? 0 : viewport.width * 0.08
-  const y = isWide ? -1.5 : isMobile ? -3.0 : -1.0
-  const scale = isMobile ? (size.width < 700 ? 0.55 : 0.7) : isWide ? 1.15 : 1.0
+  const x = isWide ? viewport.width * 0.14 : isMobile ? 0 : viewport.width * 0.06
+  const y = isWide ? -2.0 : isMobile ? -4.0 : -1.5
+  const scale = isMobile ? (size.width < 700 ? 0.50 : 0.65) : isWide ? 1.0 : 0.9
 
   useFrame((_, dt) => {
     if (!group.current) return
@@ -487,7 +487,7 @@ function SceneContent({ tier, interactive }) {
               speed={p.speed}
               tilt={p.tilt}
               phase={p.phase}
-              photoSize={[2.8, 3.6, 1, 1]}
+              photoSize={[4.2, 5.4, 1, 1]}
             />
           ))}
         </Suspense>
@@ -527,7 +527,7 @@ export default function HeroScene({ tier = 'high', className = '' }) {
         frameloop={visible ? 'always' : 'never'}
         dpr={dpr}
         gl={{ antialias: tier === 'high', alpha: false, powerPreference: 'high-performance', stencil: false, depth: true }}
-        camera={{ position: [0, 2, 32], fov: 42, near: 0.1, far: 100 }}
+        camera={{ position: [0, 3, 44], fov: 42, near: 0.1, far: 120 }}
         onCreated={({ gl }) => {
           gl.toneMapping = THREE.ACESFilmicToneMapping
           gl.toneMappingExposure = 1.35
