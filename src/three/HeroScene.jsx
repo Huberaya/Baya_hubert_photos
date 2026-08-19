@@ -48,11 +48,11 @@ function Backdrop({tex}){
 }
 
 const PHOTOS=[
-  {src:'/assets/images/gallery/thumbs/shooting-1.webp', p:[-3.2,0.9,1.8], r:0.08, s:1.05},
-  {src:'/assets/images/gallery/thumbs/portrait-1.webp', p:[-1.1,-0.55,0.6], r:-0.06, s:1.0},
-  {src:'/assets/images/gallery/thumbs/gastro-1.webp', p:[1.8,0.45,1.0], r:0.04, s:0.98},
-  {src:'/assets/images/gallery/thumbs/immobili-1.webp', p:[3.4,-0.35,1.4], r:-0.05, s:0.92},
-  {src:'/assets/images/gallery/thumbs/scene-2.webp', p:[0.15,1.55,-0.3], r:0.09, s:0.86},
+  {src:'/assets/images/arena/photo1.jpg', p:[-3.2,0.9,1.8], r:0.08, s:1.05},
+  {src:'/assets/images/arena/photo2.jpg', p:[-1.1,-0.55,0.6], r:-0.06, s:1.0},
+  {src:'/assets/images/arena/photo3.jpg', p:[1.8,0.45,1.0], r:0.04, s:0.98},
+  {src:'/assets/images/arena/photo4.jpg', p:[3.4,-0.35,1.4], r:-0.05, s:0.92},
+  {src:'/assets/images/arena/photo5.jpg', p:[0.15,1.55,-0.3], r:0.09, s:0.86},
 ]
 
 function Floating({src, base, rot, scale, pointer}){

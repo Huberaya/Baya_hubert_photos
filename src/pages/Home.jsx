@@ -12,7 +12,7 @@ function HeroFallback(){
   return (
     <div className="hero__fallback" aria-hidden="true">
       <div className="hero__fallback-veil" />
-      <img src="/assets/images/eiffel-tower-transparent-v2.png" alt="" className="hero__fallback-tower" loading="eager" />
+      <img src="/assets/images/arena/hero.jpg" alt="" className="hero__fallback-tower" loading="eager" />
     </div>
   )
 }
@@ -49,7 +49,7 @@ function Hero({caps}){
           </div>
           <div className="hero__trust" data-reveal data-reveal-delay="560">
             <div className="hero__avatars" aria-hidden="true">
-              <img src="/assets/images/gallery/thumbs/portrait-2.webp" alt="" /><img src="/assets/images/gallery/thumbs/scene-2.webp" alt="" /><img src="/assets/images/gallery/thumbs/rue-1.webp" alt="" />
+              <img src="/assets/images/arena/about.jpg" alt="" /><img src="/assets/images/gallery/thumbs/scene-2.webp" alt="" /><img src="/assets/images/gallery/thumbs/rue-1.webp" alt="" />
             </div>
             <div className="hero__trust-text"><span className="mono">Confiance</span><span>120+ tirages livrés · 4.9/5</span></div>
             <span className="hero__trust-spacer" aria-hidden="true"/>
@@ -58,10 +58,10 @@ function Hero({caps}){
         </div>
         <div className="hero__right" aria-hidden="true">
           <div className="hero__stack">
-            <div className="float-card float-card--a" data-depth="0.08"><img src="/assets/images/prints/canal-reflets.webp" alt="" /><span className="float-tag">01 — Canal, Reflets — 100 $</span><span className="float-arrow">↗</span></div>
-            <div className="float-card float-card--b" data-depth="0.12"><img src="/assets/images/gallery/thumbs/archi-1.webp" alt="" /><span className="float-tag float-tag--gold">02 — Verrière — 90 $</span></div>
-            <div className="float-card float-card--c" data-depth="0.09"><img src="/assets/images/gallery/thumbs/immobili-2.webp" alt="" /><span className="float-tag">Nef — noir & blanc</span></div>
-            <div className="float-card float-card--d" data-depth="0.05"><img src="/assets/images/gallery/thumbs/nature-1.webp" alt="" /><span className="float-tag float-tag--dot">Disponible</span></div>
+            <div className="float-card float-card--a" data-depth="0.08"><img src="/assets/images/arena/photo1.jpg" alt="" /><span className="float-tag">01 — Canal, Reflets — 100 $</span><span className="float-arrow">↗</span></div>
+            <div className="float-card float-card--b" data-depth="0.12"><img src="/assets/images/arena/photo3.jpg" alt="" /><span className="float-tag float-tag--gold">02 — Verrière — 90 $</span></div>
+            <div className="float-card float-card--c" data-depth="0.09"><img src="/assets/images/arena/photo4.jpg" alt="" /><span className="float-tag">Nef — noir & blanc</span></div>
+            <div className="float-card float-card--d" data-depth="0.05"><img src="/assets/images/arena/photo5.jpg" alt="" /><span className="float-tag float-tag--dot">Disponible</span></div>
           </div>
           <p className="hero__caption mono">Système orbital — 5 tirages en lévitation</p>
         </div>
@@ -119,11 +119,11 @@ function Univers(){
     return()=>{ try{ctx?.revert()}catch{} }
   },[])
   const items=[
-    {id:'01', title:'Rue & Instantanés', desc:'Le geste suspendu, le reflet qui passe.', img:'/assets/images/gallery/thumbs/rue-1.webp'},
-    {id:'02', title:'Architecture & Lignes', desc:'Géométrie, verrière, répétition.', img:'/assets/images/gallery/thumbs/archi-1.webp'},
-    {id:'03', title:'Nuit & Lumières', desc:'La ville quand elle respire bas.', img:'/assets/images/gallery/thumbs/nuit-1.webp'},
-    {id:'04', title:'Nature & Saisons', desc:'Estuaire, courbe, matière.', img:'/assets/images/gallery/thumbs/nature-1.webp'},
-    {id:'05', title:'Scène & Culture', desc:'Rideau, coupole, présence.', img:'/assets/images/gallery/thumbs/scene-1.webp'},
+    {id:'01', title:'Rue & Instantanés', desc:'Le geste suspendu, le reflet qui passe.', img:'/assets/images/arena/photo2.jpg'},
+    {id:'02', title:'Architecture & Lignes', desc:'Géométrie, verrière, répétition.', img:'/assets/images/arena/photo1.jpg'},
+    {id:'03', title:'Nuit & Lumières', desc:'La ville quand elle respire bas.', img:'/assets/images/arena/photo6.jpg'},
+    {id:'04', title:'Nature & Saisons', desc:'Estuaire, courbe, matière.', img:'/assets/images/arena/photo4.jpg'},
+    {id:'05', title:'Scène & Culture', desc:'Rideau, coupole, présence.', img:'/assets/images/arena/photo5.jpg'},
   ]
   return (
     <section id="univers" className="section univers">
@@ -185,7 +185,7 @@ function AboutTeaser(){
     <section className="section about-teaser">
       <div className="container about-teaser__grid">
         <div className="about-teaser__media" data-reveal>
-          <img src="/assets/images/gallery/thumbs/portrait-2.webp" alt="Baya Hubert" loading="lazy" />
+          <img src="/assets/images/arena/about.jpg" alt="Baya Hubert" loading="lazy" />
           <div className="about-teaser__overlay"><p className="mono" style={{color:'var(--gold)'}}>Baya Hubert — Paris</p><h3 className="display">Photographe de<br/><em>l’ordinaire lumineux</em></h3></div>
           <span className="about-teaser__badge">Disponible — Portraits · Mode · Événementiel</span>
         </div>
@@ -270,7 +270,7 @@ export default function Home(){
   },[])
   return (
     <>
-      <Seo title="Baya Hubert — La lumière, vraie." description="Portfolio immersif de Baya Hubert, photographe à Paris. Galerie orbitale futuriste, tirages d'art, lumière sculptée." image="/assets/images/prints/canal-reflets.webp" />
+      <Seo title="Baya Hubert — La lumière, vraie." description="Portfolio immersif de Baya Hubert, photographe à Paris. Galerie orbitale futuriste, tirages d'art, lumière sculptée." image="/assets/images/arena/hero.jpg" />
       <Hero caps={caps} />
       <Manifesto />
       <Univers />

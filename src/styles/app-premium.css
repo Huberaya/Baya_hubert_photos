@@ -113,3 +113,23 @@
 
 /* header tweaks */
 .header{ backdrop-filter:blur(16px) saturate(140%); }
+
+/* ARENA — enrichissement lumière dorée */
+.hero--futur .hero__fallback{ background:#050408; }
+.hero--futur .hero__fallback-tower{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.52;
+  filter:brightness(0.9) contrast(1.05) saturate(1.1);
+}
+.hero--futur .hero__fallback-veil{
+  position:absolute; inset:0;
+  background:
+    radial-gradient(70% 60% at 35% 45%, transparent 30%, rgba(5,4,8,0.55) 75%, rgba(5,4,8,0.92) 100%),
+    linear-gradient(90deg, rgba(5,4,8,0.82) 0%, rgba(5,4,8,0.35) 22%, transparent 45%),
+    linear-gradient(0deg, rgba(5,4,8,0.55) 0%, transparent 35%);
+}
+.hero--futur .hero__canvas{ opacity:0.95; mix-blend-mode:screen; }
+
+/* editorial tweak inspired by arena site — big tracking on kicker */
+.hero--futur .hero__kicker{ letter-spacing:0.28em; font-size:10px; color:rgba(216,178,106,0.95); }
+.hero--futur .hero__title--huge{ text-shadow:0 12px 40px rgba(0,0,0,0.5); }
+
