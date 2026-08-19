@@ -11,7 +11,9 @@ import { useHeroAudio } from '../three/useHeroAudio'
 
 const HeroScene = lazy(() => import('../three/HeroScene'))
 
-/* Bouton ambiance sonore (Web Audio API procédé) */
+/* =========================================================
+   AMBIANCE SONORE — bouton en bas du hero
+   ========================================================= */
 function SoundToggle({ tier }) {
   const { playing, toggle } = useHeroAudio(tier)
   return (
@@ -38,22 +40,26 @@ function SoundToggle({ tier }) {
   )
 }
 
-/* Fallback si WebGL KO : silhouette de la Tour Eiffel en CSS */
+/* =========================================================
+   FALLBACK — silhouette Tour Eiffel en CSS pur
+   ========================================================= */
 function HeroFallback() {
   return (
     <div className="hero__fallback" aria-hidden="true">
+      <div className="hero__fallback-veil" />
       <img src="/assets/images/eiffel-tower-transparent-v2.png" alt="" className="hero__fallback-tower" loading="eager" decoding="async" />
     </div>
   )
 }
 
 /* =========================================================
-   HERO — minimal, laisse le 3D respirer
+   HERO — silencieux, éditorial, premium
+   Tour Eiffel en silhouette parallax à l'arrière-plan
    ========================================================= */
 function Hero({ caps }) {
   const [mounted, setMounted] = useState(false)
   useEffect(() => {
-    const t = setTimeout(() => setMounted(true), 260)
+    const t = setTimeout(() => setMounted(true), 200)
     return () => clearTimeout(t)
   }, [])
 
@@ -70,22 +76,32 @@ function Hero({ caps }) {
           <HeroFallback />
         )}
         <div className="hero__vignette" aria-hidden="true" />
+        <div className="hero__grain" aria-hidden="true" />
       </div>
 
       <div className="container hero__content">
-        <p className="eyebrow hero__kicker" data-reveal>Baya Hubert · Paris & Île-de-France</p>
+        <p className="hero__kicker" data-reveal>
+          <span className="hero__kicker-line" /> Baya Hubert · Paris &amp; Île-de-France
+        </p>
 
-        <h1 className="display hero__title" data-reveal data-reveal-delay="120">
-          La lumière,<br /><em>vraie.</em>
+        <h1 className="hero__title" data-reveal data-reveal-delay="120">
+          <span className="hero__title-line">La lumière,</span>
+          <span className="hero__title-line"><em>vraie.</em></span>
         </h1>
 
-        <p className="hero__lede" data-reveal data-reveal-delay="260">
+        <p className="hero__lede" data-reveal data-reveal-delay="320">
           Photographe à Paris. Cinq univers, une seule obsession&nbsp;: saisir l'authentique.
         </p>
 
-        <div className="hero__actions" data-reveal data-reveal-delay="380">
-          <Link to="/contact" className="btn btn--solid">Demander un devis</Link>
-          <a href="#galerie" className="btn btn--ghost">Voir le portfolio<span className="btn__arrow">↓</span></a>
+        <div className="hero__actions" data-reveal data-reveal-delay="460">
+          <Link to="/contact" className="btn btn--solid btn--magnetic">
+            Demander un devis
+            <span className="btn__arrow">→</span>
+          </Link>
+          <a href="#galerie" className="btn btn--ghost">
+            Voir le portfolio
+            <span className="btn__arrow">↓</span>
+          </a>
         </div>
       </div>
 
@@ -100,14 +116,14 @@ function Hero({ caps }) {
 }
 
 /* =========================================================
-   BANDEAU DÉFILANT (manifeste)
+   MARQUEE — manifeste défilant (univers)
    ========================================================= */
 function Marquee() {
-  const words = ['Shooting', 'Portraits', 'Gastronomie', 'Immobilier', 'Mariage', 'Événement', 'Street', 'Architecture']
+  const words = ['Shooting', 'Portraits', 'Gastronomie', 'Immobilier', 'Mariage', 'Événement']
   return (
     <div className="marquee" aria-hidden="true">
       <div className="marquee__track">
-        {[0, 1].map((k) => (
+        {[0, 1, 2].map((k) => (
           <div className="marquee__group" key={k}>
             {words.map((w) => (
               <span key={`${k}-${w}`} className="marquee__item">{w}<i>✦</i></span>
@@ -120,7 +136,7 @@ function Marquee() {
 }
 
 /* =========================================================
-   MANIFESTE — manifeste éditorial
+   STATEMENT — manifeste éditorial premium
    ========================================================= */
 function Manifesto() {
   const ref = useRef(null)
@@ -150,10 +166,15 @@ function Manifesto() {
         <div className="manifesto__text">
           <p className="eyebrow" data-reveal>Parti pris</p>
           <h2 className="section-title" data-reveal data-reveal-delay="60">
-            Refuser l'artifice.<br />Chercher la <em>vérité d'un regard</em>.
+            Refuser l'artifice.<br />
+            Chercher la <em>vérité d'un regard</em>.
           </h2>
-          <p className="lede" data-reveal data-reveal-delay="120">
+          <p className="lede" data-reveal data-reveal-delay="160">
             Pas de pose forcée, pas de lumière artificielle, aucune image générée. Je compose avec le réel&nbsp;: l'heure, la fenêtre, la matière, le geste.
+          </p>
+          <p className="manifesto__quote" data-reveal data-reveal-delay="240">
+            <span className="manifesto__quote-mark">«</span>
+            La lumière ne se pose pas, elle se rencontre.
           </p>
         </div>
 
@@ -170,7 +191,7 @@ function Manifesto() {
 }
 
 /* =========================================================
-   GALERIE — filtre + grille + EXIF on hover
+   GALERIE — grille asymétrique éditoriale
    ========================================================= */
 function Gallery() {
   const [filter, setFilter] = useState('all')
@@ -212,14 +233,17 @@ function Gallery() {
           {filter !== 'all' && ` · ${CATEGORIES.find((c) => c.id === filter)?.desc}`}
         </p>
 
-        <div className="photo-grid">
+        <div className="photo-grid photo-grid--editorial">
           {visible.map((p, i) => (
             <PhotoCard key={p.id} photo={p} index={i} priority={i < 3} onOpen={() => setLightbox(i)} />
           ))}
         </div>
 
         <div className="gallery__more" data-reveal>
-          <Link to="/portfolio" className="btn btn--ghost">Voir le portfolio complet<span className="btn__arrow">→</span></Link>
+          <Link to="/portfolio" className="btn btn--ghost">
+            Voir le portfolio complet
+            <span className="btn__arrow">→</span>
+          </Link>
         </div>
       </div>
 
@@ -236,7 +260,53 @@ function Gallery() {
 }
 
 /* =========================================================
-   SERVICES — 5 piliers / univers
+   LES 5 UNIVERS — chapitre éditorial horizontal
+   ========================================================= */
+function Univers() {
+  const universes = [
+    { id: 'shooting',    label: 'Shooting & Mode',       desc: 'Street, mode, éditorial',     photo: '/assets/images/gallery/shooting-1.webp' },
+    { id: 'portrait',    label: 'Portraits',             desc: 'Individuel, couple, famille', photo: '/assets/images/gallery/portrait-1.webp' },
+    { id: 'gastronomie', label: 'Restaurant & Gastronomie', desc: 'Plats, boissons, ambiance', photo: '/assets/images/gallery/gastro-1.webp' },
+    { id: 'immobilier',  label: 'Immobilier & Architecture', desc: 'Façades, intérieurs, lignes', photo: '/assets/images/gallery/immobili-1.webp' },
+    { id: 'mariage',     label: 'Mariage & Événements',  desc: 'Cérémonies, concerts, fêtes', photo: '/assets/images/gallery/scene-1.webp' },
+  ]
+  return (
+    <section className="section univers">
+      <Aurora className="aurora--violet" />
+      <div className="container">
+        <header className="head-center" data-reveal>
+          <p className="eyebrow eyebrow--center">Univers</p>
+          <h2 className="section-title">Cinq <em>mondes</em>, un regard</h2>
+        </header>
+        <div className="univers__grid">
+          {universes.map((u, i) => (
+            <Link
+              key={u.id}
+              to={`/portfolio?universe=${u.id}`}
+              className="univers__card"
+              data-reveal
+              data-reveal-delay={i * 80}
+            >
+              <span className="univers__media">
+                <img src={u.photo} alt={u.label} loading="lazy" />
+                <span className="univers__media-veil" />
+              </span>
+              <span className="univers__copy">
+                <span className="univers__num">{String(i + 1).padStart(2, '0')}</span>
+                <span className="univers__label">{u.label}</span>
+                <span className="univers__desc">{u.desc}</span>
+                <span className="univers__cta">Explorer <span className="btn__arrow">→</span></span>
+              </span>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* =========================================================
+   OFFRES — 5 piliers / univers
    ========================================================= */
 function Offers() {
   return (
@@ -245,7 +315,7 @@ function Offers() {
       <div className="container">
         <header className="head-center" data-reveal>
           <p className="eyebrow eyebrow--center">Prestations</p>
-          <h2 className="section-title">5 piliers, <em>5 univers</em></h2>
+          <h2 className="section-title">Cinq piliers, <em>un seul interlocuteur</em></h2>
           <p className="lede text-center">Droits d'utilisation toujours encadrés dans le devis. Devis détaillé sous 24 h.</p>
         </header>
 
@@ -375,11 +445,9 @@ function AboutTeaser() {
           <p data-reveal data-reveal-delay="120">
             Je m'appelle Baya Hubert. Je passe mes journées à parcourir les rues de Paris et sa région pour documenter les projets créatifs et les histoires d'entreprises qui méritent d'être mises en valeur.
           </p>
-          <p data-reveal data-reveal-delay="180">
-            Ma philosophie est simple&nbsp;: refuser l'artifice pour privilégier la lumière naturelle et la vérité d'un regard. Chaque séance est préparée avec soin pour créer une atmosphère de bienveillance propice aux clichés authentiques.
-          </p>
           <Link to="/apropos" className="btn btn--ghost" data-reveal data-reveal-delay="320">
-            Découvrir la démarche<span className="btn__arrow">→</span>
+            Découvrir la démarche
+            <span className="btn__arrow">→</span>
           </Link>
         </div>
       </div>
@@ -388,17 +456,23 @@ function AboutTeaser() {
 }
 
 /* =========================================================
-   FAQ
+   CTA CONTACT — final
    ========================================================= */
-function FaqBlock() {
+function ContactCTA() {
   return (
-    <section className="section faq-block">
-      <div className="container container--narrow">
-        <header className="head-center" data-reveal>
-          <p className="eyebrow eyebrow--center">FAQ</p>
-          <h2 className="section-title">Les questions <em>fréquentes</em></h2>
-        </header>
-        <Accordion items={FAQ} />
+    <section className="section contact-cta">
+      <div className="container">
+        <div className="contact-cta__inner" data-reveal>
+          <p className="eyebrow">Travaillons ensemble</p>
+          <h2 className="contact-cta__title">Vous avez un projet <em>en tête&nbsp;?</em></h2>
+          <p className="contact-cta__lede">
+            Décrivez-moi votre univers, vos envies, vos contraintes. Je reviens vers vous sous 24 h avec une proposition détaillée.
+          </p>
+          <Link to="/contact" className="btn btn--solid btn--magnetic btn--lg">
+            Demander un devis
+            <span className="btn__arrow">→</span>
+          </Link>
+        </div>
       </div>
     </section>
   )
@@ -419,12 +493,13 @@ export default function Home() {
       <Hero caps={caps} />
       <Marquee />
       <Manifesto />
+      <Univers />
       <Gallery />
       <Offers />
       <Process />
       <Stats />
       <AboutTeaser />
-      <FaqBlock />
+      <ContactCTA />
     </>
   )
 }
