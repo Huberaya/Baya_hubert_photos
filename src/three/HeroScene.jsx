@@ -443,7 +443,7 @@ function Composition({ children }) {
   // 3D occupe 3/4 de l'espace : décollage minimal, recentré, échelle agrandie
   const x = isWide ? viewport.width * 0.06 : isMobile ? 0 : viewport.width * 0.03
   const y = isWide ? -3.5 : isMobile ? -5.5 : -2.5
-  const scale = isMobile ? (size.width < 700 ? 0.40 : 0.55) : isWide ? 0.9 : 0.78
+  const scale = isMobile ? (size.width < 700 ? 0.42 : 0.58) : isWide ? 1.20 : 0.95
 
   useFrame((_, dt) => {
     if (!group.current) return
@@ -533,7 +533,7 @@ export default function HeroScene({ tier = 'high', className = '' }) {
         frameloop={visible ? 'always' : 'never'}
         dpr={dpr}
         gl={{ antialias: tier === 'high', alpha: false, powerPreference: 'high-performance', stencil: false, depth: true }}
-        camera={{ position: [0, 3, 50], fov: 42, near: 0.1, far: 140 }}
+        camera={{ position: [0, 3, 58], fov: 42, near: 0.1, far: 160 }}
         onCreated={({ gl }) => {
           gl.toneMapping = THREE.ACESFilmicToneMapping
           gl.toneMappingExposure = 1.35

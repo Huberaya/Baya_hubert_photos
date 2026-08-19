@@ -255,15 +255,14 @@
 .hero__vignette {
   position: absolute;
   inset: 0;
-  /* Vignette minimale : assombrir très peu à gauche (texte) et en bas (top) — laisse le 3D respirer */
+  /* Vignette ULTRA-légère : le 3D occupe 80% — texte seulement assombri sur ~15% du viewport */
   background:
     linear-gradient(90deg,
-      rgba(8, 7, 10, 0.6) 0%,
-      rgba(8, 7, 10, 0.35) 12%,
-      rgba(8, 7, 10, 0.10) 22%,
-      transparent 35%
+      rgba(8, 7, 10, 0.45) 0%,
+      rgba(8, 7, 10, 0.20) 8%,
+      transparent 18%
     ),
-    linear-gradient(0deg, rgba(8, 7, 10, 0.55) 0%, transparent 22%);
+    linear-gradient(0deg, rgba(8, 7, 10, 0.50) 0%, transparent 18%);
   pointer-events: none;
 }
 
@@ -325,15 +324,15 @@
 .hero__content {
   position: relative;
   z-index: var(--z-content);
-  max-width: 460px;  /* Texte compact : laisse 3/4 de l'espace au 3D */
+  max-width: 380px;
 }
-.hero__kicker { margin-bottom: var(--space-3); font-size: var(--fs-xs); }
-.hero__title { font-size: clamp(2rem, 4.5vw, 3.2rem); margin-bottom: var(--space-3); line-height: 1.05; }
+.hero__kicker { margin-bottom: var(--space-2); font-size: 11px; letter-spacing: 0.16em; }
+.hero__title { font-size: clamp(1.7rem, 3.6vw, 2.6rem); margin-bottom: var(--space-2); line-height: 1.05; }
 .hero__line { display: block; }
 .hero__line--em em { font-style: italic; background: var(--grad-gold); -webkit-background-clip: text; background-clip: text; color: transparent; animation: fadeUp 1s var(--ease-out) 0.55s both; display: inline-block; }
-.hero__lede { font-size: var(--fs-sm); color: var(--text-soft); max-width: 42ch; line-height: 1.55; }
-.hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); }
-.hero__pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: var(--space-3); font-size: 10px; }
+.hero__lede { font-size: 13px; color: var(--text-soft); max-width: 36ch; line-height: 1.5; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
+.hero__pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--space-3); font-size: 9px; }
 
 .hero__scroll {
   position: absolute;
