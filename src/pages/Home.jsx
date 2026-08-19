@@ -7,9 +7,9 @@ import { Counter, SplitReveal, TiltCard, Accordion, Aurora } from '../components
 import Icon from '../components/Icon'
 import { CATEGORIES, FAQ, OFFERS, PHOTOS, PROCESS, STATS } from '../data/content'
 import { PRINTS } from '../data/prints'
+import { useHeroAudio } from '../three/useHeroAudio'
 
 const HeroScene = lazy(() => import('../three/HeroScene'))
-import { useHeroAudio } from '../three/useHeroAudio'
 
 /* =========================================================
    BOUTON AMBIANCE SONORE

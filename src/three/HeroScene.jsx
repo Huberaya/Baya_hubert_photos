@@ -276,7 +276,7 @@ const ORBIT_SRC_INNER = [
   '/assets/images/gallery/thumbs/portrait-1.webp',
   '/assets/images/gallery/thumbs/immobili-1.webp',
   '/assets/images/gallery/thumbs/shooting-1.webp',
-  '/assets/images/gallery/thumbs/mariage-1.webp',
+  '/assets/images/gallery/thumbs/scene-2.webp',
 ]
 const ORBIT_SRC_OUTER = [
   '/assets/images/gallery/thumbs/archi-1.webp',
