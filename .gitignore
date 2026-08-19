@@ -1,4 +1,12 @@
 node_modules
+.next
+out
 dist
 .DS_Store
 *.log
+.env*
+!.env.example
+
+tsconfig.tsbuildinfo
+.npm
+.config

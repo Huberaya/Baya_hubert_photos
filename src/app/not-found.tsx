@@ -1,0 +1,2 @@
+import Link from 'next/link';
+export default function NotFound(){return <section className="flex min-h-screen items-center justify-center bg-[#060606] px-5 text-center"><div><p className="font-accent text-3xl italic text-[#c9a96e]">Erreur 404</p><h1 className="mt-4 font-serif text-[clamp(5rem,18vw,15rem)] leading-none">Hors cadre.</h1><p className="mx-auto mt-6 max-w-md text-sm leading-7 text-white/45">Cette image n'existe pas — ou plus. Revenons à la lumière.</p><Link href="/" className="luxe-button mt-10">Retour à l'accueil</Link></div></section>}

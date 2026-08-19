@@ -1,0 +1,17 @@
+'use client';
+
+import { AnimatePresence, motion } from 'framer-motion';
+import Image from 'next/image';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { useState } from 'react';
+import type { Project } from '@/data/projects';
+import { EASE } from '@/lib/constants';
+
+const layouts=['col-span-12 aspect-[1.6]','col-span-12 md:col-span-6 aspect-[.82]','col-span-12 md:col-span-6 aspect-[.82]','col-span-12 md:col-span-8 aspect-[1.2]','col-span-12 md:col-span-4 aspect-[.62]','col-span-12 aspect-[1.7]','col-span-12 md:col-span-4 aspect-[.78]','col-span-12 md:col-span-4 aspect-[.78]','col-span-12 md:col-span-4 aspect-[.78]'];
+
+export default function ProjetGallery({project}:{project:Project}) {
+  const [lightbox,setLightbox]=useState<number|null>(null); const move=(d:number)=>setLightbox(v=>v===null?0:(v+d+project.images.length)%project.images.length);
+  return <section className="bg-[#080808] py-8 md:py-16"><div className="container-luxe grid grid-cols-12 gap-3 md:gap-6">{project.images.map((src,i)=><motion.figure key={`${src}-${i}`} initial={{opacity:0,y:45,clipPath:'inset(0 0 14% 0)'}} whileInView={{opacity:1,y:0,clipPath:'inset(0 0 0% 0)'}} viewport={{once:true,amount:.08}} transition={{duration:1,delay:(i%3)*.08,ease:EASE}} className={`${layouts[i]} image-zoom relative overflow-hidden bg-[#101010]`}><button className="absolute inset-0 w-full" onClick={()=>setLightbox(i)} data-cursor="view" aria-label={`Agrandir l'image ${i+1}`}><Image src={src} alt={`${project.title}, image ${i+1} sur ${project.images.length}`} fill sizes="(max-width:768px) 100vw, 80vw" className="object-cover"/></button>{i===5&&<figcaption className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/35 px-8 text-center"><motion.p initial={{opacity:0,filter:'blur(12px)'}} whileInView={{opacity:1,filter:'blur(0px)'}} className="max-w-3xl font-accent text-[clamp(2rem,5vw,5rem)] italic leading-tight">« La lumière transforme ce que le regard croyait connaître. »</motion.p></figcaption>}</motion.figure>)}</div>
+    <AnimatePresence>{lightbox!==null&&<motion.div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/95 p-5 md:p-14" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onClick={()=>setLightbox(null)}><motion.div key={lightbox} className="relative h-full w-full" initial={{opacity:0,scale:.96}} animate={{opacity:1,scale:1}} transition={{duration:.5}} onClick={e=>e.stopPropagation()}><Image src={project.images[lightbox]} alt={`${project.title}, vue agrandie`} fill sizes="100vw" className="object-contain"/></motion.div><button onClick={()=>setLightbox(null)} aria-label="Fermer" className="absolute right-5 top-5 grid h-12 w-12 place-items-center rounded-full border border-white/20"><X/></button><button onClick={e=>{e.stopPropagation();move(-1)}} aria-label="Image précédente" className="absolute left-4 top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-black/30"><ChevronLeft/></button><button onClick={e=>{e.stopPropagation();move(1)}} aria-label="Image suivante" className="absolute right-4 top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-black/30"><ChevronRight/></button><p className="absolute bottom-5 left-1/2 -translate-x-1/2 text-[8px] tracking-[.25em] text-white/50">{String(lightbox+1).padStart(2,'0')} / {String(project.images.length).padStart(2,'0')}</p></motion.div>}</AnimatePresence>
+  </section>;
+}
