@@ -7,11 +7,11 @@ import * as THREE from 'three';
 
 type FloatingPhoto = { src: string; p: [number, number, number]; r: [number, number, number]; s: [number, number] };
 const photos: FloatingPhoto[] = [
-  { src:'/images/hubert/hubert-01.webp', p:[-3.2,.75,-1.2], r:[0,.34,-.06], s:[1.45,1.45] },
-  { src:'/images/hubert/hubert-03.webp', p:[2.85,1.05,-1.6], r:[0,-.3,.06], s:[1.4,1.4] },
-  { src:'/images/hubert/hubert-04.webp', p:[-1.65,-1.45,-.45], r:[0,.2,.035], s:[1.55,1.55] },
-  { src:'/images/hubert/hubert-12.webp', p:[1.45,-1.3,-.7], r:[0,-.18,-.04], s:[1.45,1.45] },
-  { src:'/images/hubert/hubert-08.webp', p:[.1,1.35,-2.4], r:[0,.03,0], s:[1.7,1.7] },
+  { src:'/images/editorial/portrait.webp', p:[-3.15,.65,-1.25], r:[0,.34,-.055], s:[1.08,1.62] },
+  { src:'/images/editorial/fashion.webp', p:[2.8,.82,-1.55], r:[0,-.3,.055], s:[1.08,1.62] },
+  { src:'/images/editorial/wedding.webp', p:[-1.72,-1.35,-.45], r:[0,.2,.03], s:[1.06,1.58] },
+  { src:'/images/editorial/event.webp', p:[1.55,-1.24,-.72], r:[0,-.18,-.035], s:[1.72,1.14] },
+  { src:'/images/editorial/architecture.webp', p:[.05,1.4,-2.5], r:[0,.03,0], s:[1.92,1.08] },
 ];
 
 function PhotoPlane({ item, index }: { item: FloatingPhoto; index: number }) {

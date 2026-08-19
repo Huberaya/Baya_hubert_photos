@@ -15,7 +15,7 @@ export default function Hero3D() {
     const update = () => setDesktop(media.matches); update(); media.addEventListener('change', update); return () => media.removeEventListener('change', update);
   }, []);
   return <section className="noise vignette relative h-[100svh] min-h-[680px] overflow-hidden bg-black" aria-label="Introduction immersive">
-    <div className="absolute inset-0">{desktop ? <Canvas dpr={[1,1.5]} camera={{ position:[0,0,6.5], fov:50 }} gl={{ antialias:true, alpha:false, powerPreference:'high-performance' }}><Suspense fallback={null}><Scene/></Suspense></Canvas> : <><Image src="/images/hubert/hubert-01.webp" alt="Photographie artistique par Hubert Baya" fill priority sizes="100vw" className="object-cover opacity-65"/><div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/20 to-black"/></>}</div>
+    <div className="absolute inset-0">{desktop ? <Canvas dpr={[1,1.5]} camera={{ position:[0,0,6.5], fov:50 }} gl={{ antialias:true, alpha:false, powerPreference:'high-performance' }}><Suspense fallback={null}><Scene/></Suspense></Canvas> : <><Image src="/images/editorial/hero-gold.webp" alt="Rayon de lumière dorée dans l'obscurité" fill priority sizes="100vw" className="object-cover opacity-80"/><div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/20 to-black"/></>}</div>
     <div className="relative z-10 flex h-full flex-col items-center justify-center px-5 text-center">
       <p className="mb-5 text-[8px] uppercase tracking-[.5em] text-[#c9a96e] md:text-[10px]">Paris · France · Disponible partout</p>
       <h1 className="font-serif text-[clamp(3.5rem,10.8vw,11rem)] font-normal leading-[.78] tracking-[-.065em] text-[#f3f0e8]"><SplitText text="HUBERT BAYA" /></h1>
