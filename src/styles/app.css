@@ -253,26 +253,25 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(60% 55% at 55% 45%, transparent 35%, rgba(8, 7, 10, 0.35) 80%, rgba(8, 7, 10, 0.85) 100%),
-    linear-gradient(90deg, rgba(8, 7, 10, 0.96) 0%, rgba(8, 7, 10, 0.78) 22%, rgba(8, 7, 10, 0.35) 42%, transparent 60%),
-    linear-gradient(0deg, rgba(8, 7, 10, 0.98) 2%, transparent 32%, transparent 75%, rgba(8, 7, 10, 0.4) 100%);
+    radial-gradient(50% 50% at 50% 45%, transparent 50%, rgba(8, 7, 10, 0.2) 85%, rgba(8, 7, 10, 0.5) 100%),
+    linear-gradient(90deg, rgba(8, 7, 10, 0.96) 0%, rgba(8, 7, 10, 0.72) 22%, rgba(8, 7, 10, 0.25) 42%, transparent 58%),
+    linear-gradient(0deg, rgba(8, 7, 10, 0.95) 0%, transparent 28%, transparent 78%, rgba(8, 7, 10, 0.25) 100%);
   pointer-events: none;
 }
 
-.hero__fallback { position: absolute; inset: 0; overflow: hidden; background: radial-gradient(70% 70% at 60% 45%, #1b1725, #08070a 70%); }
+.hero__fallback { position: absolute; inset: 0; overflow: hidden; background: radial-gradient(70% 70% at 60% 45%, #1b1725, #08070a 70%); display: flex; align-items: center; justify-content: center; }
 .hero__fallback-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.22; filter: saturate(0.7) contrast(1.1); }
 .hero__fallback-tower {
-  position: absolute;
-  right: 8%;
-  bottom: 0;
-  height: 85%;
+  height: 90%;
   width: auto;
-  filter: drop-shadow(0 0 30px rgba(216, 178, 106, 0.4));
+  max-width: 70%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 60px rgba(216, 178, 106, 0.45)) drop-shadow(0 0 30px rgba(255, 220, 140, 0.25));
   animation: towerGlow 4s ease-in-out infinite alternate;
 }
 @keyframes towerGlow {
-  from { filter: drop-shadow(0 0 30px rgba(216, 178, 106, 0.35)); }
-  to { filter: drop-shadow(0 0 50px rgba(255, 220, 140, 0.6)); }
+  from { filter: drop-shadow(0 0 50px rgba(216, 178, 106, 0.4)) drop-shadow(0 0 25px rgba(255, 220, 140, 0.2)); }
+  to { filter: drop-shadow(0 0 80px rgba(255, 220, 140, 0.65)) drop-shadow(0 0 40px rgba(255, 200, 120, 0.35)); }
 }
 .hero__fallback-iris { position: absolute; top: 40%; left: 55%; translate: -50% -50%; width: min(58vw, 620px); aspect-ratio: 1; }
 .hero__fallback-iris span {
@@ -326,8 +325,8 @@
   .hero { align-items: flex-end; padding-top: 45svh; padding-bottom: var(--space-6); min-height: 120svh; }
   .hero__vignette {
     background:
-      radial-gradient(80% 35% at 50% 22%, transparent 35%, rgba(8, 7, 10, 0.3) 70%),
-      linear-gradient(0deg, rgba(8, 7, 10, 0.99) 38%, rgba(8, 7, 10, 0.85) 55%, transparent 82%);
+      radial-gradient(70% 30% at 50% 22%, transparent 40%, rgba(8, 7, 10, 0.2) 75%),
+      linear-gradient(0deg, rgba(8, 7, 10, 0.98) 40%, rgba(8, 7, 10, 0.7) 58%, transparent 85%);
   }
   .hero__title { font-size: clamp(2.4rem, 12vw, 3.4rem); }
 }

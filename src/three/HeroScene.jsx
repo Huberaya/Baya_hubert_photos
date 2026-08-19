@@ -32,17 +32,18 @@ function useDampedPointer(enabled) {
 }
 
 /* Sprite lumineux doux (dégradé radial) */
-function useGlowTexture(inner = 'rgba(255,242,214,1)', mid = 'rgba(216,178,106,0.42)') {
+function useGlowTexture(inner = 'rgba(255,235,170,1)', mid = 'rgba(255,200,120,0.5)') {
   return useMemo(() => {
     const c = document.createElement('canvas')
-    c.width = c.height = 256
+    c.width = c.height = 512
     const ctx = c.getContext('2d')
-    const g = ctx.createRadialGradient(128, 128, 0, 128, 128, 128)
+    const g = ctx.createRadialGradient(256, 256, 0, 256, 256, 256)
     g.addColorStop(0, inner)
-    g.addColorStop(0.32, mid)
-    g.addColorStop(1, 'rgba(216,178,106,0)')
+    g.addColorStop(0.25, mid)
+    g.addColorStop(0.55, 'rgba(216,160,90,0.18)')
+    g.addColorStop(1, 'rgba(216,160,90,0)')
     ctx.fillStyle = g
-    ctx.fillRect(0, 0, 256, 256)
+    ctx.fillRect(0, 0, 512, 512)
     const t = new THREE.CanvasTexture(c)
     t.colorSpace = THREE.SRGBColorSpace
     return t
@@ -50,278 +51,89 @@ function useGlowTexture(inner = 'rgba(255,242,214,1)', mid = 'rgba(216,178,106,0
 }
 
 /* =========================================================
-   TOUR EIFFEL — Modèle procédural stylisé, éclairé et lumineux
+   TOUR EIFFEL — Image billboard toujours face caméra
    ========================================================= */
-function EiffelTower({ pointer }) {
+function EiffelTowerBillboard({ pointer }) {
+  const texture = useTexture('/assets/images/eiffel-tower-512.png')
   const group = useRef()
-  const glowTex = useGlowTexture('rgba(255,235,180,1)', 'rgba(255,200,120,0.65)')
-  const beamRef = useRef()
+  const plane = useRef()
+  const glowTex = useGlowTexture()
   const haloRef = useRef()
+  const lightRef = useRef()
 
-  // Profil de la tour : [hauteur, demi-largeur] (en mètres relatifs)
-  const profile = useMemo(() => [
-    [0, 2.6],
-    [0.3, 2.35],
-    [0.8, 2.0],
-    [1.3, 1.65],
-    [2.0, 1.35],    // 1er palier
-    [2.3, 1.18],
-    [2.8, 0.95],
-    [3.3, 0.78],
-    [3.8, 0.62],    // 2e palier
-    [4.2, 0.48],
-    [4.6, 0.36],
-    [5.0, 0.25],
-    [5.3, 0.16],
-    [5.6, 0.08],
-    [5.9, 0.035],
-    [6.3, 0.012],
-    [6.8, 0.005],   // antenne
-  ], [])
+  // Image aspect: 512 × 917 ≈ 0.558 (ratio largeur / hauteur)
+  // Pour une tour de 6 unités de haut => largeur 6 × 0.558 = 3.35
+  const towerWidth = 3.6
+  const towerHeight = towerWidth * (917 / 512)
 
-  // Matériaux dorés très émissifs — la tour brille dans la nuit
-  const metalMat = useMemo(() => new THREE.MeshStandardMaterial({
-    color: '#e8b863',
-    metalness: 0.9,
-    roughness: 0.28,
-    emissive: '#c89148',
-    emissiveIntensity: 0.5,
-  }), [])
-
-  const brightMetalMat = useMemo(() => new THREE.MeshStandardMaterial({
-    color: '#f5cc6e',
-    metalness: 0.95,
-    roughness: 0.2,
-    emissive: '#ffb84d',
-    emissiveIntensity: 0.85,
-  }), [])
-
-  const darkMetalMat = useMemo(() => new THREE.MeshStandardMaterial({
-    color: '#a87834',
-    metalness: 0.95,
-    roughness: 0.32,
-    emissive: '#8a5e1f',
-    emissiveIntensity: 0.3,
-  }), [])
-
-  // Construction de la structure
-  const { legs, crossBraces, platforms, glowPoints, lights, arches } = useMemo(() => {
-    const legs = []
-    const crossBraces = []
-    const platforms = []
-    const glowPoints = []
-    const lights = []
-    const arches = []
-
-    // 4 pieds courbes (les jambes iconiques)
-    for (let fi = 0; fi < 4; fi++) {
-      const angle = (fi / 4) * Math.PI * 2 + Math.PI / 4
-      const pts = profile.map(([h, w]) => new THREE.Vector3(
-        Math.cos(angle) * w,
-        h - 3.2,
-        Math.sin(angle) * w
-      ))
-      const curve = new THREE.CatmullRomCurve3(pts)
-      const tubeGeo = new THREE.TubeGeometry(curve, 32, 0.06, 8, false)
-      legs.push({ geo: tubeGeo, angle })
-    }
-
-    // Arcs à la base (les arches emblématiques)
-    for (let fi = 0; fi < 4; fi++) {
-      const a1 = (fi / 4) * Math.PI * 2 + Math.PI / 4
-      const a2 = ((fi + 1) / 4) * Math.PI * 2 + Math.PI / 4
-      // Arc entre deux pieds adjacents au niveau du sol
-      const archPts = []
-      for (let t = 0; t <= 20; t++) {
-        const p = t / 20
-        const start = new THREE.Vector3(Math.cos(a1) * 2.6, -3.2, Math.sin(a1) * 2.6)
-        const end = new THREE.Vector3(Math.cos(a2) * 2.6, -3.2, Math.sin(a2) * 2.6)
-        const mid = new THREE.Vector3(
-          (start.x + end.x) / 2 * 0.55,
-          -3.2 + Math.sin(p * Math.PI) * 1.4,
-          (start.z + end.z) / 2 * 0.55
-        )
-        const pt = new THREE.Vector3().lerpVectors(
-          new THREE.Vector3().lerpVectors(start, mid, p),
-          new THREE.Vector3().lerpVectors(mid, end, p),
-          p
-        )
-        archPts.push(pt)
-      }
-      const curve = new THREE.CatmullRomCurve3(archPts)
-      arches.push(new THREE.TubeGeometry(curve, 24, 0.04, 6, false))
-    }
-
-    // Croisillons entre les pieds
-    for (let i = 0; i < profile.length - 1; i += 1) {
-      const [h1, w1] = profile[i]
-      const [h2, w2] = profile[Math.min(i + 2, profile.length - 1)]
-      for (let fi = 0; fi < 4; fi++) {
-        const a1 = (fi / 4) * Math.PI * 2 + Math.PI / 4
-        const a2 = ((fi + 1) / 4) * Math.PI * 2 + Math.PI / 4
-
-        // Barre horizontale entre deux pieds
-        crossBraces.push({
-          from: new THREE.Vector3(Math.cos(a1) * w1, h1 - 3.2, Math.sin(a1) * w1),
-          to: new THREE.Vector3(Math.cos(a2) * w1, h1 - 3.2, Math.sin(a2) * w1),
-        })
-
-        // Croisillon diagonal montant vers le palier suivant
-        if (i < profile.length - 2) {
-          crossBraces.push({
-            from: new THREE.Vector3(Math.cos(a1) * w1, h1 - 3.2, Math.sin(a1) * w1),
-            to: new THREE.Vector3(Math.cos(a2) * w2, h2 - 3.2, Math.sin(a2) * w2),
-          })
-        }
-      }
-    }
-
-    // Plates-formes (paliers)
-    const platformSpecs = [
-      { height: 2.0 - 3.2, width: 1.35 },
-      { height: 3.8 - 3.2, width: 0.62 },
-      { height: 5.6 - 3.2, width: 0.16 },
-    ]
-    platformSpecs.forEach(({ height, width }) => {
-      platforms.push({ height, width })
-    })
-
-    // Lumières le long des pieds (sphères émissives brillantes)
-    for (let i = 0; i < profile.length; i += 2) {
-      const [h, w] = profile[i]
-      for (let fi = 0; fi < 4; fi++) {
-        const angle = (fi / 4) * Math.PI * 2 + Math.PI / 4
-        const pos = new THREE.Vector3(
-          Math.cos(angle) * w,
-          h - 3.2,
-          Math.sin(angle) * w
-        )
-        glowPoints.push(pos)
-        if (i % 4 === 0) {
-          lights.push(pos)
-        }
-      }
-    }
-
-    return { legs, crossBraces, platforms, glowPoints, lights, arches }
-  }, [profile])
-
-  // Barres de connexion entre pieds (lines)
-  const lineGeometry = useMemo(() => {
-    const geo = new THREE.BufferGeometry()
-    const positions = []
-    crossBraces.forEach(({ from, to }) => {
-      positions.push(from.x, from.y, from.z, to.x, to.y, to.z)
-    })
-    geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3))
-    return geo
-  }, [crossBraces])
-
-  // Construction des meshes de plates-formes
-  const platformGeos = useMemo(() =>
-    platforms.map(({ height, width }) => {
-      const geo = new THREE.CylinderGeometry(width + 0.14, width + 0.14, 0.07, 28, 1)
-      return { geo, height, width }
-    }), [platforms])
+  useMemo(() => {
+    texture.colorSpace = THREE.SRGBColorSpace
+    texture.anisotropy = 8
+    texture.minFilter = THREE.LinearFilter
+    texture.magFilter = THREE.LinearFilter
+    texture.generateMipmaps = false
+  }, [texture])
 
   useFrame((state, dt) => {
     const t = state.clock.elapsedTime
+    // Léger flottement horizontal (oscillation très subtile)
     if (group.current) {
-      // Rotation continue lente autour de l'axe Y
-      group.current.rotation.y += dt * 0.05
-      // Inclinaison réactive à la souris (très subtile)
-      group.current.rotation.x = THREE.MathUtils.lerp(
-        group.current.rotation.x,
-        -pointer.current.y * 0.12,
-        0.05
-      )
-      // Souffle vertical de la tour
-      group.current.position.y = Math.sin(t * 0.4) * 0.05
+      group.current.position.y = Math.sin(t * 0.4) * 0.08
+      group.current.rotation.y = Math.sin(t * 0.15) * 0.04
     }
-    // Phare rotatif au sommet
-    if (beamRef.current) {
-      beamRef.current.material.opacity = 0.4 + Math.sin(t * 0.8) * 0.2
-      beamRef.current.rotation.y = t * 0.4
-    }
-    // Halo principal pulsant
+    // Pulsation du halo principal
     if (haloRef.current) {
-      haloRef.current.material.opacity = 0.35 + Math.sin(t * 0.6) * 0.1
+      haloRef.current.material.opacity = 0.45 + Math.sin(t * 0.7) * 0.15
+    }
+    // Pulsation de la lumière interne
+    if (lightRef.current) {
+      lightRef.current.material.opacity = 0.5 + Math.sin(t * 0.5) * 0.2
     }
   })
 
   return (
     <group ref={group}>
-      {/* HALO DERRIÈRE LA TOUR — toujours visible */}
-      <mesh ref={haloRef} position={[0, 0.5, -2]}>
-        <planeGeometry args={[14, 14]} />
-        <meshBasicMaterial map={glowTex} transparent opacity={0.35} blending={THREE.AdditiveBlending} depthWrite={false} />
+      {/* Grand halo doré DERRIÈRE la tour — atmosphère */}
+      <mesh ref={haloRef} position={[0, 0.5, -1.5]}>
+        <planeGeometry args={[10, 10]} />
+        <meshBasicMaterial
+          map={glowTex}
+          transparent
+          opacity={0.5}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
+        />
       </mesh>
 
-      {/* Pieds tubulaires (les 4 jambes) */}
-      {legs.map((leg, i) => (
-        <mesh key={`leg-${i}`} geometry={leg.geo} material={metalMat} />
-      ))}
-
-      {/* Arcs à la base */}
-      {arches.map((geo, i) => (
-        <mesh key={`arch-${i}`} geometry={geo} material={brightMetalMat} />
-      ))}
-
-      {/* Croisillons (lignes) */}
-      <lineSegments geometry={lineGeometry}>
-        <lineBasicMaterial color="#d8a045" transparent opacity={0.85} linewidth={1.5} />
-      </lineSegments>
-
-      {/* Plates-formes (paliers) */}
-      {platformGeos.map(({ geo, height }, i) => (
-        <mesh key={`plat-${i}`} geometry={geo} position={[0, height, 0]} material={darkMetalMat} />
-      ))}
-
-      {/* Antenne sommet */}
-      <mesh position={[0, 3.5, 0]} material={brightMetalMat}>
-        <cylinderGeometry args={[0.012, 0.025, 0.7, 6]} />
+      {/* Halo vertical (plus resserré sur la tour) */}
+      <mesh position={[0, 0, -1]} scale={[towerWidth * 1.4, towerHeight * 1.1, 1]}>
+        <planeGeometry args={[1, 1]} />
+        <meshBasicMaterial
+          map={glowTex}
+          transparent
+          opacity={0.35}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
+        />
       </mesh>
 
-      {/* Phare rotatif au sommet */}
-      <group ref={beamRef} position={[0, 3.7, 0]}>
-        <mesh>
-          <boxGeometry args={[3.2, 0.012, 0.012]} />
-          <meshBasicMaterial color="#ffd680" transparent opacity={0.4} blending={THREE.AdditiveBlending} depthWrite={false} />
-        </mesh>
-        <mesh rotation={[0, Math.PI / 2, 0]}>
-          <boxGeometry args={[3.2, 0.012, 0.012]} />
-          <meshBasicMaterial color="#ffd680" transparent opacity={0.3} blending={THREE.AdditiveBlending} depthWrite={false} />
-        </mesh>
-      </group>
-
-      {/* Halo au sommet */}
-      <mesh position={[0, 3.7, 0]}>
-        <planeGeometry args={[3, 3]} />
-        <meshBasicMaterial map={glowTex} transparent opacity={0.65} blending={THREE.AdditiveBlending} depthWrite={false} />
+      {/* LA TOUR EIFFEL — Image billboard */}
+      <mesh ref={plane}>
+        <planeGeometry args={[towerWidth, towerHeight]} />
+        <meshBasicMaterial
+          map={texture}
+          transparent
+          opacity={1}
+          toneMapped
+          side={THREE.DoubleSide}
+          depthWrite={false}
+        />
       </mesh>
 
-      {/* Points lumineux brillants sur la structure */}
-      {glowPoints.map((pos, i) => (
-        <mesh key={`glow-${i}`} position={pos}>
-          <sphereGeometry args={[0.05, 8, 8]} />
-          <meshBasicMaterial color="#ffe4a0" transparent opacity={0.95} blending={THREE.AdditiveBlending} depthWrite={false} />
-        </mesh>
-      ))}
-
-      {/* Halos individuels sur quelques points clés */}
-      {glowPoints.filter((_, i) => i % 3 === 0).map((pos, i) => (
-        <mesh key={`halo-${i}`} position={pos}>
-          <planeGeometry args={[0.4, 0.4]} />
-          <meshBasicMaterial map={glowTex} transparent opacity={0.6} blending={THREE.AdditiveBlending} depthWrite={false} />
-        </mesh>
-      ))}
-
-      {/* Éclairage intense pour faire briller la tour */}
-      <pointLight position={[0, 0, 1.5]} color="#ffd680" intensity={8} distance={12} decay={2} />
-      <pointLight position={[0, 3.6, 1.5]} color="#ffeaa0" intensity={6} distance={10} decay={2} />
-      <pointLight position={[-3, 0, 3]} color="#d8b26a" intensity={5} distance={14} decay={2} />
-      <pointLight position={[3, 2, -3]} color="#8b7bd8" intensity={4} distance={16} decay={2} />
-      <pointLight position={[0, -3, 0]} color="#ffd680" intensity={3} distance={10} decay={2} />
+      {/* Lumière chaude INTERNES pour faire briller la tour */}
+      <pointLight ref={lightRef} position={[0, 0, 1.5]} color="#ffd680" intensity={6} distance={9} decay={2} />
+      <pointLight position={[0, 2, 2]} color="#ffba50" intensity={4} distance={10} decay={2} />
+      <pointLight position={[0, -2, 2]} color="#d8a045" intensity={3} distance={8} decay={2} />
     </group>
   )
 }
@@ -391,6 +203,7 @@ function PhotoRing({ pointer, tier, sources, radius, speed, yOffset, photoSize, 
                 opacity={0.95}
                 toneMapped={false}
                 side={THREE.DoubleSide}
+                depthWrite={false}
               />
             </mesh>
           </group>
@@ -410,8 +223,8 @@ function Dust({ tier }) {
     const positions = new Float32Array(count * 3)
     const speeds = new Float32Array(count)
     for (let i = 0; i < count; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 26
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 18
+      positions[i * 3] = (Math.random() - 0.5) * 28
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 20
       positions[i * 3 + 2] = (Math.random() - 0.5) * 18 - 2
       speeds[i] = 0.03 + Math.random() * 0.1
     }
@@ -439,7 +252,7 @@ function Dust({ tier }) {
     const d = Math.min(dt, 0.05)
     for (let i = 0; i < count; i++) {
       arr[i * 3 + 1] += speeds[i] * d
-      if (arr[i * 3 + 1] > 9) arr[i * 3 + 1] = -9
+      if (arr[i * 3 + 1] > 10) arr[i * 3 + 1] = -10
     }
     points.current.geometry.attributes.position.needsUpdate = true
     points.current.rotation.y = state.clock.elapsedTime * 0.01
@@ -454,7 +267,7 @@ function Dust({ tier }) {
         size={0.12}
         map={sprite}
         transparent
-        opacity={0.75}
+        opacity={0.7}
         depthWrite={false}
         blending={THREE.AdditiveBlending}
         sizeAttenuation
@@ -477,18 +290,18 @@ function Rig({ pointer }) {
   return null
 }
 
-/* Composition — décale la tour dans la zone libre (droite desktop, centré mobile) */
+/* Composition — décale la tour dans la zone libre */
 function Composition({ children, onLayout }) {
   const { viewport, size } = useThree()
   const group = useRef()
   const isWide = size.width >= 1024
   const isMobile = size.width < 700 || (size.width < 1024 && size.height >= size.width)
-  // Tour centrée avec léger décalage à droite sur grand écran
-  const x = isWide ? viewport.width * (size.width >= 1600 ? 0.15 : 0.18) : isMobile ? 0 : viewport.width * 0.08
-  const y = isMobile ? viewport.height * (size.width < 700 ? 0.32 : 0.26) : 0
-  const scale = isMobile ? (size.width < 700 ? 0.55 : 0.7) : isWide ? 1.35 : 1.15
+  // Position tour : décale vers le centre-droit
+  const x = isWide ? viewport.width * (size.width >= 1600 ? 0.18 : 0.2) : isMobile ? 0 : viewport.width * 0.08
+  const y = isWide ? -0.5 : isMobile ? (size.width < 700 ? -1.2 : -0.8) : -0.3
+  const scale = isMobile ? (size.width < 700 ? 0.55 : 0.72) : isWide ? 1.4 : 1.2
 
-  useEffect(() => { onLayout?.(isWide ? 0.25 : isMobile ? -1 : 0.08) }, [isWide, isMobile, onLayout])
+  useEffect(() => { onLayout?.(isWide ? 0.28 : isMobile ? -1 : 0.08) }, [isWide, isMobile, onLayout])
 
   useFrame((_, dt) => {
     if (!group.current) return
@@ -507,33 +320,33 @@ function SceneContent({ tier, interactive }) {
   return (
     <>
       <color attach="background" args={['#08070a']} />
-      <fog attach="fog" args={['#08070a', 12, 32]} />
-      <ambientLight intensity={0.55} />
-      <directionalLight position={[5, 8, 6]} intensity={1.5} color="#fff3dc" />
+      <fog attach="fog" args={['#08070a', 14, 36]} />
+      <ambientLight intensity={0.6} />
+      <directionalLight position={[5, 8, 6]} intensity={1.4} color="#fff3dc" />
       <pointLight position={[-6, -3, 4]} intensity={4} color="#8b7bd8" distance={20} />
       <pointLight position={[6, 3, -4]} intensity={3} color="#6fd7d1" distance={20} />
 
       <Rig pointer={pointer} />
       <Composition onLayout={setFadeFrom}>
-        <EiffelTower pointer={pointer} />
+        <EiffelTowerBillboard pointer={pointer} />
         <Suspense fallback={null}>
           <PhotoRing
             pointer={pointer}
             tier={tier}
             sources={ORBIT_SRC_INNER}
-            radius={4.5}
+            radius={5.0}
             speed={0.12}
-            yOffset={-0.4}
-            photoSize={[1.3, 1.62, 1, 1]}
+            yOffset={-0.3}
+            photoSize={[1.35, 1.7, 1, 1]}
             fadeFrom={fadeFrom}
           />
           <PhotoRing
             pointer={pointer}
             tier={tier}
             sources={ORBIT_SRC_OUTER}
-            radius={6.4}
+            radius={7.0}
             speed={-0.07}
-            yOffset={0.9}
+            yOffset={1.2}
             photoSize={[1.2, 1.5, 1, 1]}
             fadeFrom={fadeFrom}
           />
@@ -573,10 +386,10 @@ export default function HeroScene({ tier = 'high', className = '' }) {
         frameloop={visible ? 'always' : 'never'}
         dpr={dpr}
         gl={{ antialias: tier === 'high', alpha: false, powerPreference: 'high-performance', stencil: false, depth: true }}
-        camera={{ position: [0, 0, 15], fov: 42, near: 0.1, far: 60 }}
+        camera={{ position: [0, 0, 18], fov: 42, near: 0.1, far: 60 }}
         onCreated={({ gl }) => {
           gl.toneMapping = THREE.ACESFilmicToneMapping
-          gl.toneMappingExposure = 1.25
+          gl.toneMappingExposure = 1.3
         }}
       >
         <SceneContent tier={tier} interactive={tier !== 'low'} />

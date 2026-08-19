@@ -106,44 +106,7 @@ function Hero({ caps }) {
 function HeroFallback() {
   return (
     <div className="hero__fallback" aria-hidden="true">
-      <div className="hero__fallback-iris">
-        <span /><span /><span />
-      </div>
-      {/* Silhouette stylisée de la Tour Eiffel en SVG (toujours visible même sans WebGL) */}
-      <svg className="hero__fallback-tower" viewBox="0 0 100 200" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
-        <defs>
-          <linearGradient id="towerGrad" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="#d8b26a" stopOpacity="0.95" />
-            <stop offset="100%" stopColor="#6b5420" stopOpacity="0.6" />
-          </linearGradient>
-        </defs>
-        <g fill="url(#towerGrad)" stroke="#d8b26a" strokeWidth="0.4" strokeOpacity="0.7">
-          {/* Pied gauche */}
-          <path d="M 30 195 L 45 75 L 48 70 L 48 195 Z" opacity="0.9" />
-          {/* Pied droit */}
-          <path d="M 70 195 L 55 75 L 52 70 L 52 195 Z" opacity="0.9" />
-          {/* Arcs à la base */}
-          <path d="M 30 195 Q 50 110 70 195" fill="none" strokeWidth="1.5" />
-          {/* 1er palier */}
-          <rect x="40" y="75" width="20" height="2" />
-          {/* Section du milieu */}
-          <path d="M 45 75 L 48 50 L 52 50 L 55 75 Z" />
-          {/* 2e palier */}
-          <rect x="44" y="50" width="12" height="1.5" />
-          {/* Partie haute */}
-          <path d="M 48 50 L 49 30 L 51 30 L 52 50 Z" />
-          {/* Sommet */}
-          <path d="M 49 30 L 49.5 8 L 50.5 8 L 51 30 Z" />
-          {/* Antenne */}
-          <line x1="50" y1="8" x2="50" y2="0" strokeWidth="1" />
-        </g>
-        {/* Lumières scintillantes */}
-        <circle cx="50" cy="4" r="1.5" fill="#ffd680" opacity="0.9" />
-        <circle cx="45" cy="75" r="0.8" fill="#ffd680" opacity="0.8" />
-        <circle cx="55" cy="75" r="0.8" fill="#ffd680" opacity="0.8" />
-        <circle cx="48" cy="50" r="0.6" fill="#ffd680" opacity="0.7" />
-        <circle cx="52" cy="50" r="0.6" fill="#ffd680" opacity="0.7" />
-      </svg>
+      <img src="/assets/images/eiffel-tower-transparent.png" alt="" className="hero__fallback-tower" loading="eager" decoding="async" />
     </div>
   )
 }
