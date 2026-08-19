@@ -234,17 +234,20 @@
 .mobile-nav__meta a { color: var(--gold); }
 
 /* =========================================================
-   HERO — animation 3D agrandie avec tour Eiffel
+   HERO — animation 3D Tour Eiffel avec photos orbitales
    ========================================================= */
 .hero {
   position: relative;
-  min-height: 130svh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
-  padding-top: clamp(96px, 14vh, 150px);
-  padding-bottom: var(--space-7);
+  padding-top: clamp(96px, 12vh, 140px);
+  padding-bottom: var(--space-6);
   overflow: hidden;
   isolation: isolate;
+  background:
+    radial-gradient(70% 60% at 65% 45%, rgba(216, 178, 106, 0.08), transparent 70%),
+    radial-gradient(50% 50% at 30% 80%, rgba(139, 123, 216, 0.06), transparent 70%);
 }
 .hero__scene { position: absolute; inset: 0; z-index: -2; }
 .hero__canvas { position: absolute; inset: 0; }
@@ -252,28 +255,68 @@
 .hero__vignette {
   position: absolute;
   inset: 0;
+  /* Uniquement assombrir le côté gauche pour la lisibilité du texte, pas sur la tour */
   background:
-    radial-gradient(50% 50% at 50% 45%, transparent 50%, rgba(8, 7, 10, 0.2) 85%, rgba(8, 7, 10, 0.5) 100%),
-    linear-gradient(90deg, rgba(8, 7, 10, 0.96) 0%, rgba(8, 7, 10, 0.72) 22%, rgba(8, 7, 10, 0.25) 42%, transparent 58%),
-    linear-gradient(0deg, rgba(8, 7, 10, 0.95) 0%, transparent 28%, transparent 78%, rgba(8, 7, 10, 0.25) 100%);
+    linear-gradient(90deg,
+      rgba(8, 7, 10, 0.88) 0%,
+      rgba(8, 7, 10, 0.55) 22%,
+      rgba(8, 7, 10, 0.15) 42%,
+      transparent 55%
+    ),
+    linear-gradient(0deg,
+      rgba(8, 7, 10, 0.65) 0%,
+      transparent 25%,
+      transparent 80%,
+      rgba(8, 7, 10, 0.3) 100%
+    );
   pointer-events: none;
 }
 
 .hero__fallback { position: absolute; inset: 0; overflow: hidden; background: radial-gradient(70% 70% at 60% 45%, #1b1725, #08070a 70%); display: flex; align-items: center; justify-content: center; }
 .hero__fallback-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.22; filter: saturate(0.7) contrast(1.1); }
 .hero__fallback-tower {
-  height: 90%;
+  height: 88%;
   width: auto;
-  max-width: 70%;
+  max-width: 68%;
   object-fit: contain;
-  filter: drop-shadow(0 0 60px rgba(216, 178, 106, 0.45)) drop-shadow(0 0 30px rgba(255, 220, 140, 0.25));
+  filter: drop-shadow(0 0 60px rgba(216, 178, 106, 0.5)) drop-shadow(0 0 30px rgba(255, 220, 140, 0.3));
   animation: towerGlow 4s ease-in-out infinite alternate;
 }
 @keyframes towerGlow {
-  from { filter: drop-shadow(0 0 50px rgba(216, 178, 106, 0.4)) drop-shadow(0 0 25px rgba(255, 220, 140, 0.2)); }
-  to { filter: drop-shadow(0 0 80px rgba(255, 220, 140, 0.65)) drop-shadow(0 0 40px rgba(255, 200, 120, 0.35)); }
+  from { filter: drop-shadow(0 0 50px rgba(216, 178, 106, 0.45)) drop-shadow(0 0 30px rgba(255, 220, 140, 0.25)); }
+  to { filter: drop-shadow(0 0 90px rgba(255, 220, 140, 0.7)) drop-shadow(0 0 40px rgba(255, 200, 120, 0.4)); }
 }
 .hero__fallback-iris { position: absolute; top: 40%; left: 55%; translate: -50% -50%; width: min(58vw, 620px); aspect-ratio: 1; }
+
+/* Animation pulse des lights du hero (le bouton son) */
+.hero__sound {
+  position: absolute;
+  bottom: var(--space-4);
+  right: var(--gutter);
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  border-radius: 99px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--t-base) var(--ease-out);
+}
+.hero__sound:hover {
+  border-color: rgba(216, 178, 106, 0.55);
+  color: var(--gold-bright);
+  transform: scale(1.08);
+}
+.hero__sound.is-active {
+  background: rgba(216, 178, 106, 0.15);
+  color: var(--gold);
+  border-color: rgba(216, 178, 106, 0.4);
+}
+.hero__sound svg { width: 18px; height: 18px; }
 .hero__fallback-iris span {
   position: absolute; inset: 0;
   border-radius: 99px;
