@@ -5,6 +5,7 @@ import Layout from './components/Layout'
 import Home from './pages/Home'
 import './styles/system.css'
 import './styles/app.css'
+import './styles/app-premium.css'
 
 const Portfolio = lazy(() => import('./pages/Portfolio'))
 const Photography = lazy(() => import('./pages/Photography'))
