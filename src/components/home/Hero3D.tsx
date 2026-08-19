@@ -1,24 +1,35 @@
 'use client';
 
-import { Canvas } from '@react-three/fiber';
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowDown, Aperture, MoveDownRight } from 'lucide-react';
-import Scene from '@/components/three/Scene';
 import SplitText from '@/components/ui/SplitText';
+
+const DesktopHeroCanvas = dynamic(() => import('./DesktopHeroCanvas'), { ssr:false });
 
 export default function Hero3D() {
   const [desktop, setDesktop] = useState(false);
+  const [ready3D, setReady3D] = useState(false);
   useEffect(() => {
-    const media = matchMedia('(min-width: 768px) and (prefers-reduced-motion: no-preference)');
-    const update = () => setDesktop(media.matches); update(); media.addEventListener('change', update); return () => media.removeEventListener('change', update);
+    const media = matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)');
+    let idleId = 0; let timerId: ReturnType<typeof setTimeout> | undefined;
+    const update = () => {
+      setDesktop(media.matches);
+      if (!media.matches) { setReady3D(false); return; }
+      const requestIdle = window.requestIdleCallback;
+      if (typeof requestIdle === 'function') idleId = requestIdle(() => setReady3D(true), { timeout:900 });
+      else timerId = globalThis.setTimeout(() => setReady3D(true), 450);
+    };
+    update(); media.addEventListener('change', update);
+    return () => { media.removeEventListener('change', update); if (idleId) window.cancelIdleCallback(idleId); if (timerId) globalThis.clearTimeout(timerId); };
   }, []);
 
-  return <section className="noise relative h-[100svh] min-h-[720px] overflow-hidden bg-[#020303]" aria-label="Hubert Baya, laboratoire photographique">
+  return <section className="noise relative h-[100svh] min-h-[640px] overflow-hidden bg-[#020303] md:min-h-[720px]" aria-label="Hubert Baya, laboratoire photographique">
     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(201,169,110,.1),transparent_31%),radial-gradient(circle_at_82%_12%,rgba(116,174,180,.08),transparent_24%)]"/>
     <div className="future-grid absolute inset-0 opacity-35"/>
-    <div className="absolute inset-0">{desktop ? <Canvas dpr={[1,1.45]} camera={{ position:[0,0,7.4], fov:48 }} gl={{ antialias:true, alpha:true, powerPreference:'high-performance' }}><Suspense fallback={null}><Scene/></Suspense></Canvas> : <><Image src="/images/editorial/hero-gold.webp" alt="Matière photographique dorée" fill priority sizes="100vw" className="object-cover opacity-60"/><div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent,rgba(0,0,0,.85))]"/></>}</div>
+    <div className="absolute inset-0"><Image src="/images/editorial/hero-gold.webp" alt="Matière photographique dorée" fill priority sizes="100vw" className="object-cover opacity-55"/><div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent,rgba(0,0,0,.88))]"/>{desktop&&ready3D&&<motion.div className="absolute inset-0" initial={{opacity:0}} animate={{opacity:1}} transition={{duration:1.1}}><DesktopHeroCanvas/></motion.div>}</div>
 
     <div className="pointer-events-none absolute inset-x-5 top-24 z-10 flex items-center justify-between border-b border-white/10 pb-4 md:inset-x-10 md:top-28">
       <div className="flex items-center gap-3"><span className="status-dot"/><span className="text-[7px] uppercase tracking-[.32em] text-white/50">Optical system online</span></div>

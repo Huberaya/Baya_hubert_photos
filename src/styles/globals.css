@@ -135,6 +135,9 @@ img { user-select: none; }
 @media (max-width: 900px) {
   .container-luxe { width: min(100% - 2rem, 1440px); }
   .masonry { columns: 2; }
+  .future-grid { transform: none; background-size: 38px 38px; opacity: .12 !important; mask-image: linear-gradient(to bottom, transparent, #000 15%, #000 85%, transparent); }
+  .tech-frame { backdrop-filter: none; }
+  .scanline { opacity: .12; }
 }
 @media (max-width: 620px) {
   .masonry { columns: 1; }

@@ -6,8 +6,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 export default function SmoothScroll() {
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const lenis = new Lenis({ duration: 1.05, wheelMultiplier: .9, touchMultiplier: 1.35, smoothWheel: true });
+    if (window.matchMedia('(prefers-reduced-motion: reduce), (max-width: 1023px)').matches) return;
+    const lenis = new Lenis({ duration: .9, wheelMultiplier: .95, smoothWheel: true });
     lenis.on('scroll', ScrollTrigger.update);
     let frame = 0;
     const raf = (time: number) => { lenis.raf(time); frame = requestAnimationFrame(raf); };

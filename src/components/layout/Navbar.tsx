@@ -26,7 +26,7 @@ export default function Navbar() {
 
   return <>
     <motion.header initial={{ y: -100 }} animate={{ y: hidden ? -110 : 0 }} transition={{ duration: .7, ease: EASE }} className={`fixed inset-x-0 top-0 z-[60] border-b transition-colors duration-500 ${scrolled ? 'border-white/10 bg-black/70 backdrop-blur-xl' : 'border-transparent bg-transparent'}`}>
-      <div className="mx-auto flex h-[76px] w-[min(100%-2rem,1480px)] items-center justify-between px-5 md:h-[88px] md:px-8">
+      <div className="mx-auto flex h-[76px] w-full max-w-[1480px] items-center justify-between px-5 md:h-[88px] md:px-8">
         <Link href="/" aria-label="Hubert Baya — Accueil" className="group relative z-[62] flex items-center gap-3">
           <span className="grid h-8 w-8 place-items-center rounded-full border border-[#c9a96e]/60 font-accent text-lg text-[#c9a96e] transition-colors group-hover:bg-[#c9a96e] group-hover:text-black">B</span>
           <span><b className="block font-serif text-sm font-normal leading-none tracking-[.08em]">HUBERT BAYA</b><small className="mt-1.5 block text-[7px] uppercase tracking-[.35em] text-white/45">Photographe</small></span>
