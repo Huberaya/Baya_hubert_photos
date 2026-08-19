@@ -12,7 +12,6 @@ export default function Lightbox({ photos, index, onClose, onNav }) {
       if (e.key === 'ArrowRight') onNav(1)
       if (e.key === 'ArrowLeft') onNav(-1)
       if (e.key === 'Tab') {
-        // piège de focus simple : garde le focus dans la modale
         e.preventDefault()
         closeRef.current?.focus()
       }
@@ -43,11 +42,30 @@ export default function Lightbox({ photos, index, onClose, onNav }) {
               <span className="badge badge--gold">{CATEGORY_LABEL[photo.category]}</span>
               <h2>{photo.title}</h2>
             </div>
-            <dl className="lightbox__meta">
-              <div><dt>Lieu</dt><dd>{photo.place}</dd></div>
-              <div><dt>Lumière</dt><dd>{photo.light}</dd></div>
-              <div><dt>Optique</dt><dd>{photo.focal}</dd></div>
-            </dl>
+
+            {/* Fiche technique complète */}
+            <div className="lightbox__specs">
+              <dl className="lightbox__meta">
+                <div><dt>Lieu</dt><dd>{photo.place}</dd></div>
+                <div><dt>Date</dt><dd>{photo.date ? new Date(photo.date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }) : '—'}</dd></div>
+                <div><dt>Lumière</dt><dd>{photo.light}</dd></div>
+                <div><dt>Focale</dt><dd>{photo.focal}</dd></div>
+              </dl>
+
+              <dl className="lightbox__exif">
+                <div><dt>Boîtier</dt><dd>{photo.camera}</dd></div>
+                <div><dt>Objectif</dt><dd>{photo.lens}</dd></div>
+                <div><dt>Ouverture</dt><dd>{photo.aperture}</dd></div>
+                <div><dt>Vitesse</dt><dd>{photo.shutter}</dd></div>
+                <div><dt>ISO</dt><dd>{photo.iso}</dd></div>
+                <div><dt>Format</dt><dd>{photo.format}</dd></div>
+                <div><dt>Traitement</dt><dd>{photo.style}</dd></div>
+              </dl>
+
+              {photo.story && (
+                <p className="lightbox__story">{photo.story}</p>
+              )}
+            </div>
           </figcaption>
         </figure>
 

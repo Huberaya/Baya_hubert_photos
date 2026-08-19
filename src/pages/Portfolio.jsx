@@ -32,11 +32,11 @@ export default function Portfolio() {
           <nav className="breadcrumb" aria-label="Fil d'ariane">
             <Link to="/">Accueil</Link><span aria-hidden="true">/</span><span aria-current="page">Portfolio</span>
           </nav>
-          <p className="eyebrow" data-reveal>15 clichés · 5 univers</p>
+          <p className="eyebrow" data-reveal>15 clichés · 5 univers · fiches techniques complètes</p>
           <h1 data-reveal data-reveal-delay="60">Une banque d'images <em>vivante</em></h1>
           <p className="lede" data-reveal data-reveal-delay="120">
-            Chaque catégorie correspond à un dossier de ma banque créative. Filtrez, agrandissez, et projetez-vous :
-            ces images sont le reflet exact du rendu que vous recevrez.
+            Chaque catégorie correspond à un univers de mon travail. Filtrez, agrandissez, et projetez-vous :
+            chaque cliché affiche sa fiche technique complète (boîtier, objectif, focale, ouverture, vitesse, ISO).
           </p>
         </div>
       </header>

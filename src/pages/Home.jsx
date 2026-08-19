@@ -9,6 +9,36 @@ import { CATEGORIES, FAQ, OFFERS, PHOTOS, PROCESS, STATS } from '../data/content
 import { PRINTS } from '../data/prints'
 
 const HeroScene = lazy(() => import('../three/HeroScene'))
+import { useHeroAudio } from '../three/useHeroAudio'
+
+/* =========================================================
+   BOUTON AMBIANCE SONORE
+   ========================================================= */
+function SoundToggle({ tier }) {
+  const { playing, toggle } = useHeroAudio(tier)
+  return (
+    <button
+      className={`hero__sound ${playing ? 'is-active' : ''}`}
+      onClick={toggle}
+      aria-label={playing ? "Couper l'ambiance sonore" : "Activer l'ambiance sonore"}
+      title={playing ? 'Son activé' : 'Activer le son'}
+    >
+      {playing ? (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" stroke="none" opacity="0.3" />
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+        </svg>
+      ) : (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" stroke="none" opacity="0.3" />
+          <line x1="23" y1="9" x2="17" y2="15" />
+          <line x1="17" y1="9" x2="23" y2="15" />
+        </svg>
+      )}
+    </button>
+  )
+}
 
 /* =========================================================
    HERO
@@ -47,8 +77,8 @@ function Hero({ caps }) {
         </h1>
 
         <p className="hero__lede" data-reveal data-reveal-delay="240">
-          Photographe professionnel à Paris. Je traduis l'essence de vos lieux, la singularité de vos collaborateurs
-          et la poésie de vos célébrations en images fortes, contrastées et durables.
+          Photographe professionnel à Paris. Du shooting mode aux reportages de mariage, des portraits intimes
+          à l'immobilier d'exception, je traduis votre univers en images fortes et durables.
         </p>
 
         <div className="hero__actions" data-reveal data-reveal-delay="340">
@@ -57,11 +87,13 @@ function Hero({ caps }) {
         </div>
 
         <ul className="hero__pills" data-reveal data-reveal-delay="420">
-          <li className="badge badge--dot">Lumière naturelle</li>
+          <li className="badge badge--dot">5 univers</li>
           <li className="badge badge--dot">Devis sous 24 h</li>
           <li className="badge badge--dot">Droits encadrés</li>
         </ul>
       </div>
+
+      <SoundToggle tier={caps.tier} />
 
       <div className="hero__scroll" aria-hidden="true">
         <span className="hero__scroll-line" />
@@ -77,7 +109,7 @@ function HeroFallback() {
       <div className="hero__fallback-iris">
         <span /><span /><span />
       </div>
-      <img src="/assets/images/gallery/archi-1.webp" alt="" className="hero__fallback-img" loading="eager" decoding="async" />
+      <img src="/assets/images/gallery/nuit-3.webp" alt="" className="hero__fallback-img" loading="eager" decoding="async" />
     </div>
   )
 }
@@ -86,7 +118,7 @@ function HeroFallback() {
    BANDEAU DÉFILANT (manifeste)
    ========================================================= */
 function Marquee() {
-  const words = ['Lieux', 'Goûts', 'Corporate', 'Célébrations', 'Architecture', 'Portraits', 'Street', 'Saisons']
+  const words = ['Shooting', 'Portraits', 'Gastronomie', 'Immobilier', 'Mariage', 'Événement', 'Street', 'Architecture']
   return (
     <div className="marquee" aria-hidden="true">
       <div className="marquee__track">
@@ -191,7 +223,7 @@ function Gallery() {
           <p className="eyebrow eyebrow--center">Galerie</p>
           <h2 className="section-title">Un regard, <em>cinq univers</em></h2>
           <p className="lede text-center">
-            Une sélection rigoureuse de mes travaux. Filtrez la banque créative pour ne voir que ce qui vous concerne.
+            Shooting & mode, portraits, restaurant & gastronomie, immobilier, mariage & événements : filtrez pour ne voir que ce qui vous concerne.
           </p>
         </header>
 
@@ -388,7 +420,7 @@ function Offers() {
       <div className="container">
         <header className="head-center" data-reveal>
           <p className="eyebrow eyebrow--center">Prestations</p>
-          <h2 className="section-title">Trois piliers, <em>zéro surprise</em></h2>
+          <h2 className="section-title">Cinq piliers, <em>zéro surprise</em></h2>
           <p className="lede text-center">Un prix, un contenu, un résultat. Les droits d'utilisation sont toujours encadrés dans le devis.</p>
         </header>
 

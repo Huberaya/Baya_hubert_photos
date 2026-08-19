@@ -234,11 +234,11 @@
 .mobile-nav__meta a { color: var(--gold); }
 
 /* =========================================================
-   HERO
+   HERO — animation 3D agrandie avec tour Eiffel
    ========================================================= */
 .hero {
   position: relative;
-  min-height: 100svh;
+  min-height: 130svh;
   display: flex;
   align-items: center;
   padding-top: clamp(96px, 14vh, 150px);
@@ -253,15 +253,15 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(70% 60% at 50% 45%, transparent 20%, rgba(8, 7, 10, 0.55) 75%, rgba(8, 7, 10, 0.92) 100%),
-    linear-gradient(90deg, rgba(8, 7, 10, 0.94) 0%, rgba(8, 7, 10, 0.86) 34%, rgba(8, 7, 10, 0.35) 55%, transparent 78%),
+    radial-gradient(70% 65% at 60% 45%, transparent 20%, rgba(8, 7, 10, 0.55) 75%, rgba(8, 7, 10, 0.92) 100%),
+    linear-gradient(90deg, rgba(8, 7, 10, 0.94) 0%, rgba(8, 7, 10, 0.86) 30%, rgba(8, 7, 10, 0.3) 55%, transparent 78%),
     linear-gradient(0deg, rgba(8, 7, 10, 0.95) 2%, transparent 40%);
   pointer-events: none;
 }
 
 .hero__fallback { position: absolute; inset: 0; overflow: hidden; background: radial-gradient(70% 70% at 55% 40%, #1b1725, #08070a 70%); }
 .hero__fallback-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.22; filter: saturate(0.7) contrast(1.1); }
-.hero__fallback-iris { position: absolute; top: 50%; left: 58%; translate: -50% -50%; width: min(46vw, 460px); aspect-ratio: 1; }
+.hero__fallback-iris { position: absolute; top: 45%; left: 60%; translate: -50% -50%; width: min(58vw, 620px); aspect-ratio: 1; }
 .hero__fallback-iris span {
   position: absolute; inset: 0;
   border-radius: 99px;
@@ -310,7 +310,7 @@
 @media (max-width: 680px), (max-width: 1023px) and (orientation: portrait) { .hero__scroll { display: none; } }
 
 @media (max-width: 700px), (max-width: 1023px) and (orientation: portrait) {
-  .hero { align-items: flex-end; padding-top: 40svh; padding-bottom: var(--space-6); }
+  .hero { align-items: flex-end; padding-top: 45svh; padding-bottom: var(--space-6); min-height: 120svh; }
   .hero__vignette {
     background:
       radial-gradient(60% 34% at 50% 22%, transparent 30%, rgba(8, 7, 10, 0.5) 80%),
@@ -1335,3 +1335,115 @@ html.reduced-motion .buy__panel { animation: none; }
   .buy__panel { padding: var(--space-4) var(--space-4) var(--space-6); }
   .buy__head .eyebrow { display: none; }
 }
+
+/* =========================================================
+   FICHE TECHNIQUE — EXIF sur les cartes et la visionneuse
+   ========================================================= */
+.photo__exif {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.45s var(--ease-out), opacity 0.35s var(--ease-out), margin 0.4s;
+}
+.photo__exif span {
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(216, 178, 106, 0.12);
+  border: 1px solid rgba(216, 178, 106, 0.18);
+  white-space: nowrap;
+}
+.photo__btn:hover .photo__exif,
+.photo__btn:focus-visible .photo__exif {
+  max-height: 30px;
+  opacity: 1;
+  margin-top: 6px;
+}
+
+/* ---- Lightbox : fiche technique complète ---- */
+.lightbox__specs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-height: 40svh;
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(216, 178, 106, 0.25) transparent;
+}
+.lightbox__exif {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.lightbox__exif div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px;
+  border-radius: var(--r-sm);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--hairline);
+}
+.lightbox__exif dt {
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0;
+}
+.lightbox__exif dd {
+  font-size: var(--fs-xs);
+  color: var(--text-soft);
+  border-bottom: 0;
+  padding: 0;
+}
+.lightbox__story {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: 1.6;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--hairline);
+  font-style: italic;
+}
+@media (max-width: 900px) {
+  .lightbox__specs { max-height: 28svh; }
+  .lightbox__exif { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   BOUTON SON — Hero 3D
+   ========================================================= */
+.hero__sound {
+  position: absolute;
+  bottom: var(--space-4);
+  right: var(--gutter);
+  z-index: 3;
+  width: 42px;
+  height: 42px;
+  border-radius: 99px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--t-base) var(--ease-out);
+}
+.hero__sound:hover {
+  border-color: rgba(216, 178, 106, 0.5);
+  color: var(--gold-bright);
+  transform: scale(1.08);
+}
+.hero__sound.is-active {
+  background: rgba(216, 178, 106, 0.15);
+  color: var(--gold);
+  border-color: rgba(216, 178, 106, 0.4);
+}
+.hero__sound svg { width: 18px; height: 18px; }

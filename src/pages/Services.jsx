@@ -5,12 +5,12 @@ import Icon from '../components/Icon'
 import { FAQ, OFFERS, SERVICE_GROUPS } from '../data/content'
 
 const COMPARE = [
-  ['Durée de prise de vue', '1 h 30 / mois', '½ journée à 1 journée', '1 h à journée complète'],
-  ['Images retouchées', '15 à 20', 'Reportage complet', '12 à plusieurs centaines'],
-  ['Vidéo', '2 Reels montés', 'En option', 'En option'],
-  ['Délai de livraison', '5 jours ouvrés', '5 jours ouvrés', '5 à 15 jours ouvrés'],
-  ['Droits inclus', 'Web & réseaux', 'Diffusion commerciale', 'Usage privé'],
-  ['Galerie privée', 'Oui', 'Oui, partagée équipes', 'Oui, invités inclus'],
+  ['Durée', '1 h', '1 h', '1 h 30 / mois', '½ journée', 'Journée complète'],
+  ['Images', '15 retouchées', '12 retouchées', '15 à 20 / mois', '25 HDR', 'Centaines'],
+  ['Vidéo', '—', '—', '2 Reels / mois', 'En option', 'En option'],
+  ['Livraison', '5 jours', '5 jours', '5 jours', '5 jours', '10 à 15 jours'],
+  ['Droits', 'Web & réseaux', 'Web & réseaux', 'Web & réseaux', 'Diffusion pro', 'Privé'],
+  ['Galerie privée', 'Oui', 'Oui', 'Oui', 'Oui (équipes)', 'Oui (invités)'],
 ]
 
 export default function Services() {
@@ -18,7 +18,7 @@ export default function Services() {
     <>
       <Seo
         title="Services & Tarifs"
-        description="Formules photo à Paris : abonnement contenu pour restaurateurs, reportage corporate et événementiel, mariages et portraits. Tarifs clairs, droits encadrés, devis sous 24 h."
+        description="Formules photo à Paris : shooting, portraits, restaurant & gastronomie, immobilier & architecture, mariages & événements. Tarifs clairs, droits encadrés, devis sous 24 h."
         path="/services"
       />
 
@@ -28,7 +28,7 @@ export default function Services() {
           <nav className="breadcrumb" aria-label="Fil d'ariane">
             <Link to="/">Accueil</Link><span aria-hidden="true">/</span><span aria-current="page">Services & Tarifs</span>
           </nav>
-          <p className="eyebrow" data-reveal>Prestations</p>
+          <p className="eyebrow" data-reveal>5 piliers · 5 univers</p>
           <h1 data-reveal data-reveal-delay="60">Des offres claires, <em>sans surprise</em></h1>
           <p className="lede" data-reveal data-reveal-delay="120">
             Un prix, un contenu, un résultat. Les droits d'utilisation sont toujours encadrés et facturés à part
@@ -73,7 +73,7 @@ export default function Services() {
           </header>
           <div className="compare" data-reveal data-reveal-delay="80">
             <table>
-              <caption className="sr-only">Comparatif des trois piliers de prestation</caption>
+              <caption className="sr-only">Comparatif des cinq piliers de prestation</caption>
               <thead>
                 <tr>
                   <th scope="col">Critère</th>
@@ -98,7 +98,7 @@ export default function Services() {
       {/* Groupes détaillés */}
       {SERVICE_GROUPS.map((g) => (
         <section className="section--tight" key={g.id} id={g.id}>
-          <Aurora className={g.id === 'c2c' ? 'aurora--violet' : ''} />
+          <Aurora className={g.id === 'evenements' ? 'aurora--violet' : ''} />
           <div className="container" style={{ position: 'relative', zIndex: 1 }}>
             <div className="svc-group__head" data-reveal>
               <p className="eyebrow">{g.pillar}</p>

@@ -13,7 +13,7 @@ export default function PhotoCard({ photo, onOpen, index = 0, priority = false }
         <span className="photo__frame">
           <img
             src={photo.src}
-            srcSet={`${photo.src.replace('/portfolio/', '/portfolio/thumbs/')} 420w, ${photo.src} 1000w`}
+            srcSet={`${photo.src.replace('/gallery/', '/gallery/thumbs/')} 420w, ${photo.src} 1000w`}
             sizes="(max-width: 640px) 45vw, (max-width: 1100px) 30vw, 300px"
             alt={`${photo.title} — photographie ${CATEGORY_LABEL[photo.category]} par Baya Hubert`}
             loading={priority ? 'eager' : 'lazy'}
@@ -29,7 +29,12 @@ export default function PhotoCard({ photo, onOpen, index = 0, priority = false }
           <span className="photo__title">{photo.title}</span>
           <span className="photo__meta">
             <em>{photo.place}</em>
-            <em>{photo.focal}</em>
+            <em>{photo.camera}</em>
+          </span>
+          <span className="photo__exif">
+            {photo.aperture && <span>{photo.aperture}</span>}
+            {photo.shutter && <span>{photo.shutter}</span>}
+            {photo.iso && <span>ISO {photo.iso}</span>}
           </span>
           <span className="photo__zoom" aria-hidden="true">Agrandir ↗</span>
         </span>
