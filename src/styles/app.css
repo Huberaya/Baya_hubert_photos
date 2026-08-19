@@ -234,7 +234,7 @@
 .mobile-nav__meta a { color: var(--gold); }
 
 /* =========================================================
-   HERO — animation 3D Tour Eiffel avec photos orbitales
+   HERO — animation 3D Tour Eiffel + système solaire occupe 3/4
    ========================================================= */
 .hero {
   position: relative;
@@ -246,8 +246,8 @@
   overflow: hidden;
   isolation: isolate;
   background:
-    radial-gradient(70% 60% at 65% 45%, rgba(216, 178, 106, 0.08), transparent 70%),
-    radial-gradient(50% 50% at 30% 80%, rgba(139, 123, 216, 0.06), transparent 70%);
+    radial-gradient(70% 60% at 70% 50%, rgba(216, 178, 106, 0.10), transparent 70%),
+    radial-gradient(50% 50% at 25% 85%, rgba(139, 123, 216, 0.06), transparent 70%);
 }
 .hero__scene { position: absolute; inset: 0; z-index: -2; }
 .hero__canvas { position: absolute; inset: 0; }
@@ -255,20 +255,15 @@
 .hero__vignette {
   position: absolute;
   inset: 0;
-  /* Uniquement assombrir le côté gauche pour la lisibilité du texte, pas sur la tour */
+  /* Vignette minimale : assombrir très peu à gauche (texte) et en bas (top) — laisse le 3D respirer */
   background:
     linear-gradient(90deg,
-      rgba(8, 7, 10, 0.88) 0%,
-      rgba(8, 7, 10, 0.55) 22%,
-      rgba(8, 7, 10, 0.15) 42%,
-      transparent 55%
+      rgba(8, 7, 10, 0.6) 0%,
+      rgba(8, 7, 10, 0.35) 12%,
+      rgba(8, 7, 10, 0.10) 22%,
+      transparent 35%
     ),
-    linear-gradient(0deg,
-      rgba(8, 7, 10, 0.65) 0%,
-      transparent 25%,
-      transparent 80%,
-      rgba(8, 7, 10, 0.3) 100%
-    );
+    linear-gradient(0deg, rgba(8, 7, 10, 0.55) 0%, transparent 22%);
   pointer-events: none;
 }
 
@@ -327,14 +322,18 @@
 .hero__fallback-iris span:nth-child(3) { inset: 30%; border-color: rgba(240, 212, 154, 0.5); animation-delay: -4s; box-shadow: inset 0 0 80px rgba(216, 178, 106, 0.25); }
 @keyframes irisPulse { 0%, 100% { transform: scale(1); opacity: 0.75; } 50% { transform: scale(1.06); opacity: 1; } }
 
-.hero__content { position: relative; z-index: var(--z-content); max-width: 780px; }
-.hero__kicker { margin-bottom: var(--space-4); }
-.hero__title { font-size: var(--fs-3xl); margin-bottom: var(--space-4); }
+.hero__content {
+  position: relative;
+  z-index: var(--z-content);
+  max-width: 460px;  /* Texte compact : laisse 3/4 de l'espace au 3D */
+}
+.hero__kicker { margin-bottom: var(--space-3); font-size: var(--fs-xs); }
+.hero__title { font-size: clamp(2rem, 4.5vw, 3.2rem); margin-bottom: var(--space-3); line-height: 1.05; }
 .hero__line { display: block; }
 .hero__line--em em { font-style: italic; background: var(--grad-gold); -webkit-background-clip: text; background-clip: text; color: transparent; animation: fadeUp 1s var(--ease-out) 0.55s both; display: inline-block; }
-.hero__lede { font-size: var(--fs-md); color: var(--text-soft); max-width: 58ch; }
-.hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
-.hero__pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: var(--space-5); }
+.hero__lede { font-size: var(--fs-sm); color: var(--text-soft); max-width: 42ch; line-height: 1.55; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); }
+.hero__pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: var(--space-3); font-size: 10px; }
 
 .hero__scroll {
   position: absolute;

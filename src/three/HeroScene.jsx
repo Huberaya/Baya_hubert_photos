@@ -178,11 +178,16 @@ function Sun() {
    PLANÈTES — Photos bien plus grandes et indépendantes
    ========================================================= */
 const PLANETS_DATA = [
-  { id: 'gastro',    source: '/assets/images/gallery/thumbs/gastro-1.webp',    radius: 7.5,  speed: 0.32, tilt: 0.10,  phase: 0 },
-  { id: 'portrait',  source: '/assets/images/gallery/thumbs/portrait-1.webp',  radius: 10.5, speed: 0.23, tilt: -0.20, phase: Math.PI * 0.4 },
-  { id: 'immobili', source: '/assets/images/gallery/thumbs/immobili-1.webp', radius: 13.5, speed: 0.18, tilt: 0.08,  phase: Math.PI * 0.7 },
-  { id: 'shooting',  source: '/assets/images/gallery/thumbs/shooting-1.webp',  radius: 17.0, speed: 0.14, tilt: -0.12, phase: Math.PI * 0.2 },
-  { id: 'mariage',   source: '/assets/images/gallery/thumbs/scene-2.webp',    radius: 20.5, speed: 0.11, tilt: 0.06,  phase: Math.PI * 0.5 },
+  { id: 'gastro-a',   source: '/assets/images/gallery/thumbs/gastro-1.webp',    radius: 5.5,  speed: 0.42, tilt: 0.10,  phase: 0 },
+  { id: 'gastro-b',   source: '/assets/images/gallery/thumbs/gastro-2.webp',    radius: 7.5,  speed: 0.34, tilt: -0.18, phase: Math.PI * 0.21 },
+  { id: 'portrait-a', source: '/assets/images/gallery/thumbs/portrait-1.webp',  radius: 9.5,  speed: 0.28, tilt: 0.08,  phase: Math.PI * 0.45 },
+  { id: 'portrait-b', source: '/assets/images/gallery/thumbs/portrait-2.webp',  radius: 11.8, speed: 0.24, tilt: -0.12, phase: Math.PI * 0.7 },
+  { id: 'immobili-a', source: '/assets/images/gallery/thumbs/immobili-1.webp', radius: 14.2, speed: 0.20, tilt: 0.06,  phase: Math.PI * 0.95 },
+  { id: 'immobili-b', source: '/assets/images/gallery/thumbs/immobili-2.webp', radius: 17.0, speed: 0.17, tilt: -0.10, phase: Math.PI * 0.15 },
+  { id: 'shooting-a', source: '/assets/images/gallery/thumbs/shooting-1.webp',  radius: 19.8, speed: 0.14, tilt: 0.12,  phase: Math.PI * 0.4 },
+  { id: 'shooting-b', source: '/assets/images/gallery/thumbs/shooting-2.webp',  radius: 22.6, speed: 0.12, tilt: -0.06, phase: Math.PI * 0.65 },
+  { id: 'mariage-a',  source: '/assets/images/gallery/thumbs/scene-2.webp',    radius: 25.6, speed: 0.10, tilt: 0.08,  phase: Math.PI * 0.85 },
+  { id: 'mariage-b',  source: '/assets/images/gallery/thumbs/scene-1.webp',    radius: 29.0, speed: 0.08, tilt: -0.10, phase: Math.PI * 0.3 },
 ]
 
 function Planet({ source, radius, speed, tilt, phase, photoSize }) {
@@ -420,9 +425,9 @@ function Rig({ pointer }) {
   const { camera } = useThree()
   useFrame((_, dt) => {
     const k = 1 - Math.exp(-2.2 * Math.min(dt, 0.1))
-    camera.position.x += (pointer.current.x * 2.0 - camera.position.x) * k
-    camera.position.y += (-pointer.current.y * 1.2 - camera.position.y) * k
-    camera.lookAt(0, 6, 0)
+    camera.position.x += (pointer.current.x * 2.4 - camera.position.x) * k
+    camera.position.y += (-pointer.current.y * 1.5 - camera.position.y) * k
+    camera.lookAt(2, 6, 0)
   })
   return null
 }
@@ -435,9 +440,10 @@ function Composition({ children }) {
   const group = useRef()
   const isWide = size.width >= 1024
   const isMobile = size.width < 700 || (size.width < 1024 && size.height >= size.width)
-  const x = isWide ? viewport.width * 0.14 : isMobile ? 0 : viewport.width * 0.06
-  const y = isWide ? -2.0 : isMobile ? -4.0 : -1.5
-  const scale = isMobile ? (size.width < 700 ? 0.50 : 0.65) : isWide ? 1.0 : 0.9
+  // 3D occupe 3/4 de l'espace : décollage minimal, recentré, échelle agrandie
+  const x = isWide ? viewport.width * 0.06 : isMobile ? 0 : viewport.width * 0.03
+  const y = isWide ? -3.5 : isMobile ? -5.5 : -2.5
+  const scale = isMobile ? (size.width < 700 ? 0.40 : 0.55) : isWide ? 0.9 : 0.78
 
   useFrame((_, dt) => {
     if (!group.current) return
@@ -527,7 +533,7 @@ export default function HeroScene({ tier = 'high', className = '' }) {
         frameloop={visible ? 'always' : 'never'}
         dpr={dpr}
         gl={{ antialias: tier === 'high', alpha: false, powerPreference: 'high-performance', stencil: false, depth: true }}
-        camera={{ position: [0, 3, 44], fov: 42, near: 0.1, far: 120 }}
+        camera={{ position: [0, 3, 50], fov: 42, near: 0.1, far: 140 }}
         onCreated={({ gl }) => {
           gl.toneMapping = THREE.ACESFilmicToneMapping
           gl.toneMappingExposure = 1.35
