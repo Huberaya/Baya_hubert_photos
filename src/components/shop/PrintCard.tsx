@@ -1,0 +1,7 @@
+'use client';
+
+import Image from 'next/image';
+import { ArrowUpRight } from 'lucide-react';
+import type { Print } from '@/data/prints';
+
+export default function PrintCard({artwork,onSelect,priority=false}:{artwork:Print;onSelect:(artwork:Print)=>void;priority?:boolean}){return <article className="group"><button onClick={()=>onSelect(artwork)} className="block w-full text-left" data-cursor="view"><div className="relative aspect-[.82] overflow-hidden bg-[#111]"><Image src={artwork.image} alt={`${artwork.title}, tirage d'art par Hubert Baya`} fill priority={priority} sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.035]"/><div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60"/><span className="absolute left-4 top-4 bg-black/55 px-3 py-2 text-[7px] tracking-[.22em] text-white/65 backdrop-blur-sm">{artwork.id}</span><span className="absolute bottom-4 right-4 grid h-10 w-10 place-items-center rounded-full border border-white/25 bg-black/30 opacity-0 transition-all group-hover:opacity-100"><ArrowUpRight size={14}/></span></div><div className="flex items-end justify-between border-b border-white/10 py-5"><div><h3 className="font-serif text-2xl">{artwork.title}</h3><p className="mt-2 text-[7px] uppercase tracking-[.2em] text-white/35">{artwork.location} · {artwork.edition}</p></div><p className="font-accent text-2xl italic text-[#c9a96e]">{artwork.price} €</p></div></button></article>}

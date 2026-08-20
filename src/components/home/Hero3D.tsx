@@ -13,17 +13,9 @@ export default function Hero3D() {
   const [desktop, setDesktop] = useState(false);
   const [ready3D, setReady3D] = useState(false);
   useEffect(() => {
-    const media = matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)');
-    let idleId = 0; let timerId: ReturnType<typeof setTimeout> | undefined;
-    const update = () => {
-      setDesktop(media.matches);
-      if (!media.matches) { setReady3D(false); return; }
-      const requestIdle = window.requestIdleCallback;
-      if (typeof requestIdle === 'function') idleId = requestIdle(() => setReady3D(true), { timeout:900 });
-      else timerId = globalThis.setTimeout(() => setReady3D(true), 450);
-    };
-    update(); media.addEventListener('change', update);
-    return () => { media.removeEventListener('change', update); if (idleId) window.cancelIdleCallback(idleId); if (timerId) globalThis.clearTimeout(timerId); };
+    const media=matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)');
+    const update=()=>{setDesktop(media.matches);if(!media.matches)setReady3D(false)};
+    update();media.addEventListener('change',update);return()=>media.removeEventListener('change',update);
   }, []);
 
   return <section className="noise relative h-[100svh] min-h-[640px] overflow-hidden bg-[#020303] md:min-h-[720px]" aria-label="Hubert Baya, laboratoire photographique">
@@ -36,15 +28,16 @@ export default function Hero3D() {
       <div className="hidden items-center gap-8 text-[7px] uppercase tracking-[.28em] text-white/35 sm:flex"><span>48.8566° N</span><span>02.3522° E</span><span>Paris / 2026</span></div>
       <span className="text-[7px] tracking-[.25em] text-[#c9a96e]">HB—001</span>
     </div>
+    {desktop&&<button onClick={()=>setReady3D(value=>!value)} className="absolute right-10 top-36 z-20 border border-white/15 bg-black/40 px-4 py-3 text-[7px] uppercase tracking-[.25em] text-white/55 backdrop-blur-sm transition-colors hover:border-[#c9a96e] hover:text-[#c9a96e]">{ready3D?'Désactiver 3D':'Activer mode 3D'}</button>}
 
     <div className="relative z-10 flex h-full flex-col justify-center px-5 pt-10 md:px-10">
       <div className="mx-auto w-full max-w-[1540px]">
-        <motion.div initial={{opacity:0,x:-40}} animate={{opacity:1,x:0}} transition={{delay:.35,duration:1}} className="mb-3 flex items-center gap-4"><Aperture size={15} className="animate-spin-slow text-[#c9a96e]"/><p className="text-[8px] uppercase tracking-[.46em] text-white/48">Photographie augmentée — émotion intacte</p></motion.div>
+        <motion.div initial={{opacity:0,x:-40}} animate={{opacity:1,x:0}} transition={{delay:.12,duration:.65}} className="mb-3 flex items-center gap-4"><Aperture size={15} className="animate-spin-slow text-[#c9a96e]"/><p className="text-[8px] uppercase tracking-[.46em] text-white/48">Photographie augmentée — émotion intacte</p></motion.div>
         <h1 className="font-serif font-normal leading-[.69] tracking-[-.075em] text-[#f3f0e8]">
           <span className="block text-[clamp(4.6rem,13.5vw,14.5rem)]"><SplitText text="HUBERT" /></span>
           <span className="ml-[13vw] block text-[clamp(4.6rem,13.5vw,14.5rem)] text-transparent [-webkit-text-stroke:1px_rgba(243,240,232,.72)]"><SplitText text="BAYA" /></span>
         </h1>
-        <motion.div initial={{opacity:0,y:28}} animate={{opacity:1,y:0}} transition={{delay:1.25,duration:1}} className="mt-10 grid gap-7 border-t border-white/10 pt-5 md:grid-cols-[1fr_auto_1fr] md:items-end">
+        <motion.div initial={{opacity:0,y:28}} animate={{opacity:1,y:0}} transition={{delay:.5,duration:.7}} className="mt-10 grid gap-7 border-t border-white/10 pt-5 md:grid-cols-[1fr_auto_1fr] md:items-end">
           <div><p className="max-w-sm text-xs font-light leading-6 text-white/48">Portraits, mouvements et espaces capturés à la frontière entre matière, mémoire et lumière.</p></div>
           <a href="#introduction" className="pointer-events-auto group mx-auto grid h-20 w-20 place-items-center rounded-full border border-[#c9a96e]/55 bg-black/20 backdrop-blur-md transition-all hover:scale-110 hover:bg-[#c9a96e] hover:text-black" aria-label="Explorer"><ArrowDown size={17} className="transition-transform group-hover:translate-y-1"/></a>
           <div className="flex items-end justify-between md:justify-end md:gap-10"><div><p className="text-[7px] uppercase tracking-[.3em] text-white/25">Signal</p><p className="mt-2 font-accent text-xl italic text-[#c9a96e]">Visual futures</p></div><MoveDownRight strokeWidth={1} className="text-white/25"/></div>

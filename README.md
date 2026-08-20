@@ -10,8 +10,9 @@ Refonte complète du portfolio de **Hubert Baya**, construite avec Next.js 16 (A
 - 35 pages projet cinématiques, lightbox et navigation visuelle
 - Page À propos éditoriale avec timeline et compteurs
 - Services en cartes 3D avec déploiement plein écran
+- Boutique de 29 tirages d’art signés, proposés de 50 à 150 €, avec demande d’acquisition
 - Formulaire accessible avec validation API et envoi Resend optionnel
-- Lenis, curseur custom, transitions de page, menu mobile et `prefers-reduced-motion`
+- Chargement progressif des sections, 3D optionnelle, Lenis desktop, menu mobile et `prefers-reduced-motion`
 - SEO complet : métadonnées, Open Graph, JSON-LD Photographer, sitemap et robots
 
 ## Lancer le projet
